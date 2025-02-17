@@ -8,7 +8,7 @@ class Appointments extends Model
 {
     // MODIFIABLE EN FONCTION DU CODE
 
-    protected $table = 'appointments';
+    protected $table = 'appointment';
     protected $fillable = [
         "id",
         "user_teacher_id",
