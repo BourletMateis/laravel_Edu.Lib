@@ -13,6 +13,7 @@ class Appointments extends Model
         "id",
         "user_teacher_id",
         "user_student_id",
+        "date",
         "start_time",
         "end_time",
         "created_at",
