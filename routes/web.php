@@ -16,9 +16,15 @@ Route::get('/calendar', function () {
     return view('calendar');
 });
 
+Route::get(uri : '/modal', action: function () {
+    return view(view: 'modal');
+});
+
 
 Route::get('/test', function () {
     $schedules = Schedule::with('teacher')->get();
 
     return view('test_schedules', compact('schedules'));
 });
+
+

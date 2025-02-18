@@ -1,0 +1,75 @@
+/* FullCalendar Green Theme */
+
+/* Fond général du calendrier */
+.fc {
+    background-color: #e8f5e9; /* Vert très pâle */
+  }
+  
+  /* Barre d'outils (header) */
+  .fc .fc-toolbar {
+    background-color: #2e7d32; /* Vert foncé */
+    color: #ffffff;
+    padding: 10px;
+  }
+  
+  /* Titre de la barre d'outils */
+  .fc .fc-toolbar-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffffff;
+  }
+  
+  /* Boutons de navigation dans la toolbar */
+  .fc .fc-button {
+    background-color: #43a047; /* Vert moyen */
+    border: none;
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin: 0 2px;
+    transition: background-color 0.3s;
+  }
+  
+  .fc .fc-button:hover,
+  .fc .fc-button:focus {
+    background-color: #66bb6a; /* Vert clair */
+  }
+  
+  /* Cellules de la grille (jours) */
+  .fc .fc-daygrid-day {
+    border: 1px solid #c8e6c9; /* Vert très pâle */
+  }
+  
+  /* Jour actuel */
+  .fc .fc-day-today {
+    background-color: #c8e6c9; /* Vert clair très pâle */
+  }
+  
+  /* Styles des événements */
+  .fc-event {
+    background-color: #66bb6a !important; /* Vert clair */
+    border: 1px solid #388e3c; /* Vert plus soutenu */
+    color: #ffffff;
+    padding: 2px 4px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s;
+  }
+  
+  /* Hover sur les événements */
+  .fc-event:hover {
+    background-color: #81c784 !important; /* Vert un peu plus clair */
+  }
+  
+  /* Pour les vues agenda (si utilisées) */
+  .fc .fc-agenda-event {
+    background-color: #66bb6a !important;
+    border: 1px solid #388e3c;
+    color: #fff;
+  }
+  
+  /* Optionnel : style de la bordure entre les jours */
+  .fc .fc-scrollgrid {
+    border-color: #c8e6c9;
+  }
+  

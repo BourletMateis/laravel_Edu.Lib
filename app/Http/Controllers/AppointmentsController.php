@@ -18,6 +18,7 @@ class AppointmentsController extends Controller
             $end = Carbon::parse($appointment->date . ' ' . $appointment->end_time)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
 
             return [
+                'id' => $appointment->id,
                 'title' => 'RDV',
                 'start' => $start,
                 'end' => $end,
