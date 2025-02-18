@@ -48,3 +48,5 @@ document.querySelectorAll('.hours div').forEach(hour => {
         showConfirmationPopup(time, date);
     });
 });
+
+

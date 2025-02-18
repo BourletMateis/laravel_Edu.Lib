@@ -23,3 +23,7 @@ Route::get('/test', function () {
 
     return view('test_schedules', compact('schedules'));
 });
+
+use App\Http\Controllers\ProfesseurController;
+
+Route::get('/reservation', [ProfesseurController::class, 'index']);

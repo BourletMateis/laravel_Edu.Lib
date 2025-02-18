@@ -133,3 +133,10 @@ body {
 .popup-content {
     transition: transform 0.3s ease;
 }
+
+#prof-selector {
+    font-size: 18px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}

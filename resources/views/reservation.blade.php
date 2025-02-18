@@ -185,30 +185,34 @@
     </div>
     <div class="profile">
         <img src="{{ asset('img/lama.jpg') }}" alt="Photo du professeur">
-        <h2>Jean Dupont</h2>
-        <p>Matière enseignée : Mathématiques</p>
+        <h2>
+            <select id="prof-selector">
+                @foreach($professeurs as $professeur)
+                    <option value="{{ $professeur->id }}">{{ $professeur->name }} {{ $professeur->surname }} - {{ $professeur->specialite }}</option>
+                @endforeach
+            </select>
+        </h2>
     </div>
-</div>
 
+    <script src="{{ asset('js/reservation.js') }}"></script>
 
-<script src="{{ asset('js/reservation.js') }}"></script>
-<!-- Popup de confirmation de réservation -->
-<div id="confirmation-popup" class="popup" style="display: none;">
-    <div class="popup-content">
-        <h3>Confirmation de réservation</h3>
-        <p id="confirmation-info"></p>
-        <div class="duration-options">
-            <button onclick="confirmReservation('1h')">Réserver 1h</button>
-            <button onclick="confirmReservation('2h')">Réserver 2h</button>
-        </div>
-        <div class="popup-actions">
-            <button onclick="closePopup()">Annuler</button>
-            <button onclick="finalizeReservation()">Confirmer</button>
+    <!-- Popup de confirmation de réservation -->
+    <div id="confirmation-popup" class="popup" style="display: none;">
+        <div class="popup-content">
+            <h3>Confirmation de réservation</h3>
+            <p id="confirmation-info"></p>
+            <div class="duration-options">
+                <button onclick="confirmReservation('1h')">Réserver 1h</button>
+                <button onclick="confirmReservation('2h')">Réserver 2h</button>
+            </div>
+            <div class="popup-actions">
+                <button onclick="closePopup()">Annuler</button>
+                <button onclick="finalizeReservation()">Confirmer</button>
+            </div>
         </div>
     </div>
+
 </div>
-
-
 <script>
     function toggleHours(element) {
         let hours = element.querySelector('.hours');
@@ -217,5 +221,13 @@
         hours.style.display = (hours.style.display === 'block') ? 'none' : 'block';
     }
 </script>
+
+<script>
+    document.getElementById("prof-selector").addEventListener("change", function () {
+        this.blur(); // Désélectionne le menu après le choix, le refermant automatiquement
+    });
+
+</script>
+
 </body>
 </html>
