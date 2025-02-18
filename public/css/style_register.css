@@ -35,11 +35,30 @@ body {
     font-size: 1rem;
     font-weight: bold;
     width: 60%;
+    display: block;
 
 }
-.btn-success:hover {
+.btn-success:hover, .btn-password:hover {
     background-color: #1b4332;
 }
+
+.btn-password{
+    background-color: #2d6a4f;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 48%;
+    display: block;
+    margin: 0 ;
+}
+
+.link-password{
+    display: block;
+    margin-right: 50%;
+}
+
 label {
     font-weight: bold;
     color: #081c15;
@@ -48,4 +67,5 @@ label {
     display: flex;
     justify-content: center;
 }
+
 
