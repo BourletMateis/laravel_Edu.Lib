@@ -18,8 +18,18 @@
             <a href="/index">EduLib</a>
         </li>
         <ul class="menu">
-            <li><a href="{{ route('login') }}" class="login">Se connecter</a></li>
-            <li><a href="{{ route('register') }}" class="register">S'enregister</a></li>
+            @if (Route::has('login'))
+                @auth
+                    <a href="{{ url('/home') }}">Dashboard</a>
+
+                @else
+                    <li><a href="{{ route('login') }}" class="login">Se connecter</a></li>
+
+                    @if (Route::has('register'))
+                        <li><a href="{{ route('register') }}" class="register">S'enregister</a></li>
+                    @endif
+                @endauth
+            @endif
         </ul>
     </nav>
 </header>
