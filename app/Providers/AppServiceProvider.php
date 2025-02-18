@@ -1,11 +1,21 @@
 <?php
-
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Policies\RolePolicy;
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
+    /**
+     * The model-to-policy mappings for the application.
+     *
+     * @var array
+     */
+    protected $policies = [
+        User::class => RolePolicy::class,
+    ];
+
     /**
      * Register any application services.
      */
@@ -19,6 +29,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
     }
 }
