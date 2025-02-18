@@ -10,9 +10,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
+
 <div class="calendar_container">
     <div id="calendar"></div>
 </div>
+
+<!-- Modal pour afficher les détails de l'événement -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -26,67 +29,78 @@
                 <p id="eventDetails">Chargement...</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="deleteAppointment">Annuler</button>
+                <button type="button" class="btn btn-danger" id="deleteAppointments">Annuler</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
 </div>
+
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridWeek',
-        locale: 'fr',
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,dayGridWeek,dayGridDay,timeslot'
-        },
-        buttonText: {
-            today: "Aujourd'hui",
-            month: 'Mois',
-            week: 'Semaine',
-            day: 'Jour'
-        },
-        customButtons: {
-            timeslot: {
-                text: ' + ',
-                click: function() {
-                    alert('Créneau horaire sélectionné');
-                },
-                className: 'timeslot-button',
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridWeek',
+            locale: 'fr',
+            headerToolbar: {
+                left: 'prev,next today',  
+                center: 'title',
+                right: 'dayGridMonth,dayGridWeek,dayGridDay,timeslot'
+            },
+            buttonText: {
+                timeslot: "+",  
+                today: "Aujourd'hui",
+                month: 'Mois',
+                week: 'Semaine',
+                day: 'Jour'
+            },
+            customButtons: {
+                timeslot: {
+                text: '+',
+                    click: function() {
+                        alert('Créneau horaire sélectionné');  
+                    }
+                }
+            },
+            events: '/booking',  
+            eventClick: function(info) {
+                var eventDetails = "Client: " + (info.event.title || "Non spécifié") + " " + (info.event.extendedProps.surname || "Non spécifié") + "\n" +
+                                   "Email: " + (info.event.extendedProps.email || "Non spécifié") + "\n" +
+                                   "Description: " + (info.event.extendedProps.description || "Non spécifié") + "\n" +
+                                   "Début: " + (info.event.start ? info.event.start.toLocaleString() : "Non spécifié") + "\n" +
+                                   "Fin: " + (info.event.end ? info.event.end.toLocaleString() : "Non spécifié");
+
+                document.getElementById('eventDetails').innerText = eventDetails;
+                document.getElementById('myModalLabel').innerText = info.event.extendedProps.subject || "Non spécifié";
+
+                document.getElementById('deleteAppointments').setAttribute('data-event-id', info.event.id);
+                $('#myModal').modal('show');
             }
-        },
-        events: '/booking',  
-        eventClick: function(info) {
-            document.getElementById('eventDetails').innerText = 
-                "Email: " + info.event.extendedProps.email + "\n" +
-                "Matière: " + info.event.extendedProps.subject + "\n" +
-                "Description: " + info.event.extendedProps.description + "\n" +
-                "Début: " + info.event.start.toLocaleString() + "\n" +
-                "Fin: " + info.event.end.toLocaleString();
-            document.getElementById('myModalLabel').innerText = info.event.title + " " + info.event.extendedProps.surname;
-            
-            // Ajouter l'ID de l'événement au bouton "Annuler"
-            document.getElementById('deleteAppointment').setAttribute('data-event-id', info.event.id);
-            
-            $('#myModal').modal('show');
-        }
-    });
-    calendar.render();
-
-    // Fonction pour supprimer un rendez-vous
-    document.getElementById('deleteAppointment').onclick = function() {
-        var appointmentId = this.getAttribute('data-event-id');
-        deleteAppointment(appointmentId);
-        $('#myModal').modal('hide');
-    }
-
-
-    
+        });
         calendar.render();
-    });
+
+        document.getElementById('deleteAppointments').addEventListener('click', function() {
+            if (confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?')) {
+            var eventId = this.getAttribute('data-event-id');
+            $.ajax({
+                url: '/appointments/' + eventId,  
+                method: 'DELETE',
+                data: {
+                _token: $('meta[name="csrf-token"]').attr('content'),
+                id: eventId
+                },
+                success: function(response) {
+                alert(response.message);
+                $('#myModal').modal('hide'); 
+                calendar.refetchEvents();     
+                },
+                error: function(response) {
+                alert('Erreur lors de la suppression. Veuillez réessayer.');
+                }
+            });
+            }
+        });
+        });
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
