@@ -16,7 +16,7 @@ Route::get('/index', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/booking', [AppointmentsController::class, 'index']);
+Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
 Route::get('/calendar', function () {
     return view('calendar');
 });
@@ -24,6 +24,8 @@ Route::get('/calendar', function () {
 Route::get(uri : '/modal', action: function () {
     return view(view: 'modal');
 });
+
+Route::delete('/appointments/{id}', [AppointmentsController::class, 'destroy']);
 
 
 Route::get('/test', function () {
