@@ -26,4 +26,8 @@ class AppointmentsController extends Controller
 
         return response()->json($events);
     }
+
+    public function showReservation() {
+        return view('reservation');
+    }
 }
