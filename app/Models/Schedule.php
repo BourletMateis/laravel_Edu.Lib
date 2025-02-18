@@ -13,13 +13,16 @@ class Schedule extends Model
         "id",
         "user_teacher_id",
         "booked",
-        "date",
+        "day",
         "time_start",
         "time_end",
-        "price"
+
     ];
 
     public function teacher(){
         return $this->belongsTo(User::class, "user_teacher_id");
     }
+
+
+
 }

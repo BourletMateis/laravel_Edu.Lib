@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AppointmentsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\Schedule;
+use App\Http\Controllers\ScheduleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,10 +27,7 @@ Route::get(uri : '/modal', action: function () {
 });
 
 
-Route::get('/test', function () {
-    $schedules = Schedule::with('teacher')->get();
 
-    return view('test_schedules', compact('schedules'));
-});
-
-
+Route::middleware(['auth'])->get('schedules', [ScheduleController::class, 'index'])->name('schedules.index');
+Route::middleware(['auth'])->post('schedules', [ScheduleController::class, 'store']);
+Route::middleware(['auth'])->delete('schedules/{schedule}', [ScheduleController::class, 'destroy']);
