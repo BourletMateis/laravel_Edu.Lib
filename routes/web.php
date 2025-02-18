@@ -4,19 +4,6 @@ use App\Http\Controllers\AppointmentsController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Schedule;
 
-Route::middleware(['role:admin'])->group(function () {
-    Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
-});
-
-
-
-Route::middleware(['role:teacher'])->group(function () {
-    Route::get('/appointments', [AppointmentsController::class, 'index'])->name('appointments.index');
-    Route::delete('/appointments/{id}', [AppointmentsController::class, 'destroy'])->name('appointments.destroy');
-    Route::get('/calendar', function () {
-        return view('calendar');
-    })->name('calendar');
-});
 
 
 Route::get('/', function () {
@@ -25,6 +12,12 @@ Route::get('/', function () {
 
 Route::get('/index', function () {
     return view('index');
+});
+
+Route::get('/booking', [AppointmentsController::class, 'index']);
+
+Route::get('/calendar', function () {
+    return view('calendar');
 });
 
 
@@ -46,3 +39,7 @@ Route::get('/test', function () {
 });
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

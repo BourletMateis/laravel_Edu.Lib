@@ -12,9 +12,8 @@ class AppServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $policies = [
-        User::class => RolePolicy::class,
-    ];
+
+     
 
     /**
      * Register any application services.
