@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointments;
-use Illuminate\Http\Request;
+use App\Http\Requests\AppointmentRequest;
 use Carbon\Carbon;
 use App\Models\User;
 
@@ -39,7 +39,7 @@ class AppointmentsController extends Controller
         return response()->json($events);
     }
 
-    public function destroy(Request $request)
+    public function destroy(AppointmentRequest $request)
     {
         $appointment = Appointments::find($request->id);
             if ($appointment) {
