@@ -2,9 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointments;
-use Illuminate\Http\Request;
+use App\Http\Requests\AppointmentRequest;
 use Carbon\Carbon;
-use App\Models\User; 
+use App\Models\User;
 
 class AppointmentsController extends Controller
 {
@@ -20,7 +20,7 @@ class AppointmentsController extends Controller
 
             $user = User::find($appointment->user_student_id);
             $name_surname = $user->name . ' ' . $user->surname;
-            
+
             return [
                 'id' => $appointment->id,
                 'start' => $start,
@@ -32,13 +32,14 @@ class AppointmentsController extends Controller
                 'subject' => $appointment->title,
                 'description' => $appointment->description,
                 'date' => $appointment->date,
+                'price' => $appointment->price,
             ];
         });
 
         return response()->json($events);
     }
 
-    public function destroy(Request $request)
+    public function destroy(AppointmentRequest $request)
     {
         $appointment = Appointments::find($request->id);
             if ($appointment) {
@@ -47,5 +48,5 @@ class AppointmentsController extends Controller
         }
             return response()->json(['message' => 'Rendez-vous non trouvé'], 404);
     }
-    
+
 }

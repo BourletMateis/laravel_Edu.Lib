@@ -6,8 +6,8 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\Models\User; 
-
+use App\Models\User;
+use App\Http\Requests\ScheduleRequest;
 class ScheduleController extends Controller
 {
     public function index(Request $request) {
@@ -16,35 +16,16 @@ class ScheduleController extends Controller
 
         $schedules = Schedule::where('user_teacher_id', Auth::id())->get();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        
-        $availableSlots = $this->generateTimeSlots($startTime, $endTime);  
-        
+
+        $availableSlots = $this->generateTimeSlots($startTime, $endTime);
+
         return view('calendar', compact('schedules', 'availableSlots','days'));
 
     }
 
-    
-    public function store(Request $request) {
-        // Validation des données du formulaire
-        $request->validate([
-            'day' => 'required|string',
-            'time_start' => 'required',
-            'time_end' => 'required|after:time_start',
 
-        ]);
-
-        // Vérifier si l'horaire existe déjà pour cet enseignant
-        $exists = Schedule::where('user_teacher_id', Auth::id())
-            ->where('day', $request->day)
-            ->where('time_start', $request->time_start)
-            ->where('time_end', $request->time_end)
-            ->exists();
-
-        if ($exists) {
-            return redirect()->route('schedules.index')
-                ->with('error', 'Cet horaire existe déjà.');
-        }
-
+    public function store(ScheduleRequest $request) // Utilisation de ScheduleRequest
+    {
         // Vérifier si l'horaire existe déjà pour cet enseignant
         $exists = Schedule::where('user_teacher_id', Auth::id())
             ->where('day', $request->day)
@@ -64,12 +45,11 @@ class ScheduleController extends Controller
             'day' => $request->day,
             'time_start' => $request->time_start,
             'time_end' => $request->time_end,
-
         ]);
 
         // Redirection avec un message de succès
         return redirect()->route('schedules.index')->with('success', 'Horaire ajouté');
-    } 
+    }
 
     public function destroy(Schedule $schedule) {
         // Supprimer l'horaire si c'est le professeur connecté qui en est l'auteur
@@ -79,7 +59,7 @@ class ScheduleController extends Controller
                 }
                 return response()->json(['message' => 'Plage horaire non trouvé'], 404);
             }
-        
+
 
     /**
      * Génère des créneaux horaires entre une heure de début et une heure de fin.
@@ -111,14 +91,14 @@ class ScheduleController extends Controller
 
 
             $user = User::find($schedules->user_teacher_id);
-            
+
             return [
                 'id' => $schedules->id,
                 'start' => $start,
                 'end' => $end,
                 "className"=> "event-schedule-load",
 
-                
+
             ];
         });
 

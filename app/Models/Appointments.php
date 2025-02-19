@@ -19,6 +19,7 @@ class Appointments extends Model
         "start_time",
         "end_time",
         "created_at",
+        "price"
     ];
 
     public function user()
