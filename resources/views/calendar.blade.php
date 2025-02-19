@@ -132,15 +132,15 @@
             },
             events: '/booking',  
             eventClick: function(info) {
-                var eventDetails = "Client: " + (info.event.title || "Non spécifié") + " " + (info.event.extendedProps.surname || "Non spécifié") + "\n" +
-                                   "Email: " + (info.event.extendedProps.email || "Non spécifié") + "\n" +
+                var eventDetails = 
+                                   "Matière: " + (info.event.extendedProps.subject || "Non spécifié") + "\n" +
                                    "Description: " + (info.event.extendedProps.description || "Non spécifié") + "\n" +
+                                   "Email: " + (info.event.extendedProps.email || "Non spécifié") + "\n" +
                                    "Début: " + (info.event.start ? info.event.start.toLocaleString() : "Non spécifié") + "\n" +
                                    "Fin: " + (info.event.end ? info.event.end.toLocaleString() : "Non spécifié");
 
                 document.getElementById('eventDetails').innerText = eventDetails;
-                document.getElementById('myModalLabel').innerText = info.event.extendedProps.subject || "Non spécifié";
-
+                document.getElementById('myModalLabel').innerText = info.event.title
                 document.getElementById('deleteAppointments').setAttribute('data-event-id', info.event.id);
                 $('#myModal').modal('show');
             }

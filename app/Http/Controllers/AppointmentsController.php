@@ -19,14 +19,13 @@ class AppointmentsController extends Controller
             $end = Carbon::parse($appointment->date . ' ' . $appointment->end_time)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
 
             $user = User::find($appointment->user_student_id);
+            $name_surname = $user->name . ' ' . $user->surname;
             
             return [
                 'id' => $appointment->id,
-                'title' => 'RDV',
                 'start' => $start,
                 'end' => $end,
-                'title' => $user->name,
-                'surname' => $user->surname,
+                'title' => $name_surname,
                 'email'=> $user->email,
                 'user_student_id' => $appointment->user_student_id,
                 'user_teacher_id' => $appointment->user_teacher_id,
