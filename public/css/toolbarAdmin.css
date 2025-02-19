@@ -1,0 +1,65 @@
+/* Conteneur principal */
+.toolbar-container {
+    position: absolute;
+    top: 35%;
+    left: 6rem;
+    
+}
+
+/* Barre d'outils verticale */
+.vertical-toolbar {
+    width: 64px;
+    height: 280px;
+    background: linear-gradient(145deg, #2d9c5f, #1f8f4c);
+    border-radius: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    box-shadow: 0 10px 25px rgba(45, 156, 95, 0.2);
+    padding: 20px 0;
+}
+
+/* Boutons de la barre d'outils */
+.toolbar-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.toolbar-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: scale(1.05);
+}
+
+.toolbar-button:active {
+    transform: scale(0.95);
+}
+
+/* Effet de brillance */
+.vertical-toolbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    height: 1px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    border-radius: 32px 32px 0 0;
+}
