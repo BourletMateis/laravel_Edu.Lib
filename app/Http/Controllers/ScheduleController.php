@@ -6,6 +6,7 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\User; 
 
 class ScheduleController extends Controller
 {
@@ -74,10 +75,11 @@ class ScheduleController extends Controller
         // Supprimer l'horaire si c'est le professeur connecté qui en est l'auteur
         if ($schedule->user_teacher_id == Auth::id()) {
             $schedule->delete();
-            return redirect()->route('schedules.index')->with('success', 'Horaire supprimé');
-        }
-        return redirect()->route('schedules.index')->with('error', 'Non autorisé');
-    }
+            return response()->json(['message' => 'Plage horaire supprimée']);
+                }
+                return response()->json(['message' => 'Plage horaire non trouvé'], 404);
+            }
+        
 
     /**
      * Génère des créneaux horaires entre une heure de début et une heure de fin.
@@ -93,5 +95,33 @@ class ScheduleController extends Controller
         }
 
         return $slots;
+    }
+
+    public function load_schedule()
+    {
+        Carbon::setLocale('fr');
+        $schedules = schedule::where('user_teacher_id', auth()->id())->get();
+
+        $events = $schedules->map(function ($schedules) {
+            // Formatage des dates
+            $start = Carbon::parse($schedules->day . ' ' . $schedules->time_start)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
+            $end = Carbon::parse($schedules->day . ' ' . $schedules->time_end)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
+            $end_time = Carbon::parse($schedules->time_end)->locale('fr')->isoFormat('HH:mm');
+
+
+
+            $user = User::find($schedules->user_teacher_id);
+            
+            return [
+                'id' => $schedules->id,
+                'start' => $start,
+                'end' => $end,
+                "className"=> "event-schedule-load",
+
+                
+            ];
+        });
+
+        return response()->json($events);
     }
 }

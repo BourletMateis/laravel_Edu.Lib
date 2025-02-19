@@ -11,7 +11,7 @@ class AppointmentsController extends Controller
     public function index()
     {
         Carbon::setLocale('fr');
-        $appointments = Appointments::all();
+        $appointments = Appointments::where('user_teacher_id', auth()->id())->get();
 
         $events = $appointments->map(function ($appointment) {
             // Formatage des dates
@@ -32,8 +32,6 @@ class AppointmentsController extends Controller
                 'subject' => $appointment->title,
                 'description' => $appointment->description,
                 'date' => $appointment->date,
-                'start' => $start,
-                'end' => $end,
             ];
         });
 

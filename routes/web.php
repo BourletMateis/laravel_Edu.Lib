@@ -31,6 +31,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::delete('/appointments/{appointment}', [AppointmentsController::class, 'destroy']);
+Route::delete('/schedule/{schedule}', [ScheduleController::class, 'destroy']);
 
 Route::get(uri : '/modal', action: function () {
     return view(view: 'modal');
@@ -42,3 +43,6 @@ Route::get(uri : '/modal', action: function () {
 Route::middleware(['auth'])->get('calendar', [ScheduleController::class, 'index'])->name('schedules.index');
 Route::middleware(['auth'])->post('schedules', [ScheduleController::class, 'store']);
 Route::middleware(['auth'])->delete('schedules/{schedule}', [ScheduleController::class, 'destroy']);
+
+
+Route::middleware(['auth'])->get('schedule_load', [ScheduleController::class, 'load_schedule'])->name('schedule_load');

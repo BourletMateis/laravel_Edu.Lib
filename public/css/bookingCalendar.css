@@ -1,6 +1,6 @@
 /* Calendar Container Styles */
 .calendar_container {
-    max-width: 65%;
+    max-width: 60%;
     max-height: 50%;
     margin: 2rem auto;
     padding: 1.5rem;
@@ -84,11 +84,24 @@ a:hover{
     transition: transform 0.2s ease;
 }
 
+.event-schedule-load {
+    background-color: #0033ff !important;
+    border: 1px solid #043575 !important;
+    color: white !important;
+}
+
 .fc .fc-event:hover {
     transform: translateY(-1px);
     background-color: #16a34a;
 }
 
+.fc-event[data-source="schedule_load"] {
+    background-color: #FF9800 !important; 
+}
+
+.fc-event[data-source="booking"] {
+    background-color: #FF9800 !important; 
+}
 .modal-content {
     border-radius: 12px;
     border: none;
