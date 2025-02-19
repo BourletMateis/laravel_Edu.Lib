@@ -152,6 +152,7 @@
                     var eventDetails =
                         "Matière: " + (info.event.extendedProps.subject || "Non spécifié") + "\n" +
                         "Description: " + (info.event.extendedProps.description || "Non spécifié") + "\n" +
+                        "Prix: " + (info.event.extendedProps.price || "Non spécifié")+"€" + "\n" +
                         "Email: " + (info.event.extendedProps.email || "Non spécifié") + "\n" +
                         "Début: " + (info.event.start ? info.event.start.toLocaleString() : "Non spécifié") + "\n" +
                         "Fin: " + (info.event.end ? info.event.end.toLocaleString() : "Non spécifié");
