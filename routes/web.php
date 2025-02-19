@@ -14,20 +14,23 @@ Route::get('/index', function () {
     return view('index');
 });
 
-Route::get('/booking', [AppointmentsController::class, 'index']);
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
 Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
-Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
-Route::get('/calendar', function () {
+Route::get('/calendar', action: function () {
     return view('calendar');
 });
+
+Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
+
 
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::delete('/appointments/{appointment}', [AppointmentsController::class, 'destroy']);
 
 Route::get(uri : '/modal', action: function () {
     return view(view: 'modal');

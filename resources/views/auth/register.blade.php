@@ -75,20 +75,21 @@
                                 <label class="col-md-4 col-form-label text-md-end">{{ __('Professeur ?') }}</label>
                                 <div class="col-md-6 d-flex align-items-center">
                                     <div class="form-check me-3">
-                                        <input class="form-check-input @error('is_teacher') is-invalid @enderror" type="radio" name="is_teacher" id="teacher_yes" value="1" {{ old('is_teacher') == '1' ? 'checked' : '' }} required>
+                                        <input class="form-check-input @error('role') is-invalid @enderror" type="radio" name="role" id="teacher_yes" value="teacher" {{ old('role') == 'teacher' ? 'checked' : '' }} required>
                                         <label class="form-check-label" for="teacher_yes">Oui</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input @error('is_teacher') is-invalid @enderror" type="radio" name="is_teacher" id="teacher_no" value="0" {{ old('is_teacher') == '0' ? 'checked' : '' }} required>
+                                        <input class="form-check-input @error('role') is-invalid @enderror" type="radio" name="role" id="teacher_no" value="student" {{ old('role') == 'student' ? 'checked' : '' }} required>
                                         <label class="form-check-label" for="teacher_no">Non, je suis apprenant</label>
                                     </div>
-                                    @error('is_teacher')
+                                    @error('role')
                                     <span class="invalid-feedback d-block" role="alert">
-                                <strong>{{ $message }}</strong>
-                                </span>
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
                             </div>
+
 
                             <div class="mb-0">
                                 <button type="submit" class="btn btn-success">
