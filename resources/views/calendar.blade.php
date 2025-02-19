@@ -156,17 +156,33 @@
                 }
             },
             eventClick: function(info) {
-                var eventDetails = 
-                                   "Matière: " + (info.event.extendedProps.subject || "Non spécifié") + "\n" +
-                                   "Description: " + (info.event.extendedProps.description || "Non spécifié") + "\n" +
-                                   "Email: " + (info.event.extendedProps.email || "Non spécifié") + "\n" +
-                                   "Début: " + (info.event.start ? info.event.start.toLocaleString() : "Non spécifié") + "\n" +
-                                   "Fin: " + (info.event.end ? info.event.end.toLocaleString() : "Non spécifié");
-
-                document.getElementById('eventDetails').innerText = eventDetails;
-                document.getElementById('myModalLabel').innerText = info.event.title
-                document.getElementById('deleteAppointments').setAttribute('data-event-id', info.event.id);
-                $('#myModal').modal('show');
+                var isBookingEvent = false;
+                if (info.event.source.url === '/booking') {
+                    isBookingEvent = true;
+                    var eventDetails =
+                        "Matière: " + (info.event.extendedProps.subject || "Non spécifié") + "\n" +
+                        "Description: " + (info.event.extendedProps.description || "Non spécifié") + "\n" +
+                        "Prix: " + (info.event.extendedProps.price || "Non spécifié")+"€" + "\n" +
+                        "Email: " + (info.event.extendedProps.email || "Non spécifié") + "\n" +
+                        "Début: " + (info.event.start ? info.event.start.toLocaleString() : "Non spécifié") + "\n" +
+                        "Fin: " + (info.event.end ? info.event.end.toLocaleString() : "Non spécifié");
+                    document.getElementById('eventDetails').innerText = "";
+                    document.getElementById('eventDetails').innerText = eventDetails;
+                    document.getElementById('myModalLabel').innerText = info.event.title;
+                    document.getElementById('deleteAppointments').setAttribute('data-event-id', info.event.id);
+                    document.getElementById('deleteAppointments').setAttribute('data-event-type', 'booking'); // Marqueur pour l'événement de réservation
+                    $('#myModal').modal('show');
+                } else {
+                    isBookingEvent = false;
+                    var eventDetails =
+                        "Début: " + (info.event.start ? info.event.start.toLocaleString() : "Non spécifié") + "\n" +
+                        "Fin: " + (info.event.end ? info.event.end.toLocaleString() : "Non spécifié");
+                    document.getElementById('eventDetails').innerText = eventDetails;
+                    document.getElementById('myModalLabel').innerText = info.event.title;
+                    document.getElementById('deleteAppointments').setAttribute('data-event-id', info.event.id);
+                    document.getElementById('deleteAppointments').setAttribute('data-event-type', 'schedule'); // Marqueur pour l'événement d'horaire
+                    $('#myModal').modal('show');
+                }
             }
         });
         calendar.render();
