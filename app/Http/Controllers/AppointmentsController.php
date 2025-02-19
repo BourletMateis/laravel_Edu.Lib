@@ -39,9 +39,9 @@ class AppointmentsController extends Controller
         return response()->json($events);
     }
 
-    public function destroy(AppointmentRequest $request)
+    public function destroy(AppointmentRequest $request, Appointments $appointment)
     {
-        $this->authorize('delete', auth()->user());
+        $this->authorize('delete', $appointment);
         $appointment = Appointments::find($request->id);
             if ($appointment) {
             $appointment->delete();

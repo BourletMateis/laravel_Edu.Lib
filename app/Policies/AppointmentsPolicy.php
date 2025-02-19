@@ -13,7 +13,7 @@ class AppointmentsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'teacher';
+        return false;
     }
 
     /**
