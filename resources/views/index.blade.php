@@ -1,28 +1,6 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel ="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Pacifico&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lobster&family=Pacifico&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>Edulib</title>
+@extends('layouts.app')
 
-</head>
-<body>
-<header>
-    <nav>
-        <li class="edulib">
-            <a href="/index">EduLib</a>
-        </li>
-        <ul class="menu">
-            <li><a href="{{ route('login') }}" class="login">Se connecter</a></li>
-            <li><a href="{{ route('register') }}" class="register">S'enregister</a></li>
-        </ul>
-    </nav>
-</header>
+@section('content')
 <main>
     <section class="title">
         <h1>Bienvenue sur EduLib</h1>
@@ -31,13 +9,43 @@
     </section>
     <section class="info">
         <div class="info-item">
-            <h2>Sujet 1</h2>
-            <p>Description du sujet 1</p>
+            <h2>Des cours passionnants</h2>
+            <p>Améliorez vos compétences en <strong>français, mathématiques, physique-chimie et plein d'autres</strong>
+                avec nos cours interactifs et personnalisés. Nos enseignants expérimentés vous guideront à travers
+                la grammaire, le vocabulaire et la culture française.</p>
             <a href="#" class="learn-more">En savoir plus</a>
         </div>
-        <div class="info-item">
-            <h2>Sujet 2</h2>
-            <p>Description du sujet 2</p>
+        <div class="info-item" style="text-align: center;">
+            <h2>Témoignage</h2>
+            <p>Découvrez ce que nos élèves disent de nous et comment nos cours les ont aidés à atteindre leurs objectifs.</p>
+            <div class = "card-box">
+                <div class = "card-testimony">
+                    <img src="{{ asset('images/profil_image.png') }}" alt="Profil Image">
+                    <h5><strong>Titouan</strong></h5>
+                    <p>Élève de 3ème</p>
+                    <center>
+                        <p class="commentary">Meilleur expérience de ma vie j'eesiae juste de faire un texte méga gros taz capté</p>
+                    </center>
+                </div>
+                <div class = "card-testimony">
+                    <img src="{{ asset('images/profil_image.png') }}" alt="Profil Image">
+                    <h5><strong>Kevin</strong></h5>
+                    <p>Élève de terminale</p>
+                    <center>
+                        <p class="commentary">Meilleur expérience de ma vie j'eesiae juste de faire un texte méga gros taz capté</p>
+                    </center>
+                </div>
+                <div class = "card-testimony">
+                    <img src="{{ asset('images/profil_image.png') }}" alt="Profil Image">
+                    <h5><strong>Casper</strong></h5>
+                    <p>Élève en première année de CPGE</p>
+                    <center>
+                        <p class="commentary">Meilleur expérience de ma vie j'eesiae juste de faire un texte méga gros taz capté</p>
+                    </center>
+
+                </div>
+
+            </div>
             <a href="#" class="learn-more">En savoir plus</a>
         </div>
         <div class="info-item">
@@ -47,5 +55,4 @@
         </div>
     </section>
 </main>
-</body>
-</html>
+@endsection

@@ -1,12 +1,14 @@
 <?php
 namespace App\Providers;
 
+use App\Policies\ArticlePolicy;
 use Illuminate\Support\ServiceProvider;
 use App\Policies\RolePolicy;
 use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
+
     /**
      * The model-to-policy mappings for the application.
      *

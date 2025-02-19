@@ -87,6 +87,9 @@ main .title .button:hover {
 main .info {
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    margin: 2em;
     padding: 20px;
 }
 
@@ -94,7 +97,8 @@ main .info .info-item {
     background-color: var(--light-bg-color); /* Couleur de fond clair pour les sections */
     padding: 20px;
     border-radius: 5px;
-    width: 30%;
+    width: 70%;
+    margin: 2em;
 }
 
 main .info .info-item h2 {
@@ -108,4 +112,34 @@ main .info .info-item .learn-more {
 
 main .info .info-item .learn-more:hover {
     text-decoration: underline;
+}
+
+
+/*                          STYLE CARD                    */
+
+.card-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.card-testimony img {
+    width: 17em;
+    height: auto;
+    padding: 0 3em 0 3em;
+}
+
+.card-testimony h5 {
+    font-size: 20px;
+    text-align: center;
+}
+
+.card-testimony p {
+    text-align: center;
+    align-items: center;
+}
+
+.commentary {
+    width: 50%;
+    text-align: center;
 }
