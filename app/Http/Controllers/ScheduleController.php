@@ -32,6 +32,7 @@ class ScheduleController extends Controller
 
 
     public function destroy(Schedule $schedule) {
+        $this->authorize('delete', $schedule);
         // Supprimer l'horaire si c'est le professeur connecté qui en est l'auteur
         if ($schedule->user_teacher_id == Auth::id()) {
             $schedule->delete();
@@ -45,6 +46,7 @@ class ScheduleController extends Controller
      * Génère des créneaux horaires entre une heure de début et une heure de fin.
      */
     private function generateTimeSlots($startTime, $endTime) {
+        $this->authorize('view', new Schedule());
         $slots = [];
         $start = Carbon::createFromFormat('H:i', $startTime);
         $end = Carbon::createFromFormat('H:i', $endTime);
@@ -59,6 +61,7 @@ class ScheduleController extends Controller
 
     public function load_schedule()
     {
+        $this->authorize('view', new Schedule());
         Carbon::setLocale('fr');
         $schedules = schedule::where('user_teacher_id', auth()->id())->get();
 

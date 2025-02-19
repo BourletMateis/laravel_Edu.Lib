@@ -13,7 +13,7 @@ class AppointmentsPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return $user->role === 'teacher';
     }
 
     /**
@@ -21,7 +21,7 @@ class AppointmentsPolicy
      */
     public function view(User $user, Appointments $appointments): bool
     {
-        return false;
+        return $user->role === 'teacher';
     }
 
     /**
@@ -29,7 +29,7 @@ class AppointmentsPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->role === 'teacher';
     }
 
     /**
@@ -37,7 +37,7 @@ class AppointmentsPolicy
      */
     public function update(User $user, Appointments $appointments): bool
     {
-        return false;
+        return $user->role === 'teacher';
     }
 
     /**
@@ -45,7 +45,7 @@ class AppointmentsPolicy
      */
     public function delete(User $user, Appointments $appointments): bool
     {
-        return false;
+        return $user->role === 'teacher';
     }
 
     /**
@@ -61,6 +61,6 @@ class AppointmentsPolicy
      */
     public function forceDelete(User $user, Appointments $appointments): bool
     {
-        return false;
+        return $user->role === 'teacher';
     }
 }

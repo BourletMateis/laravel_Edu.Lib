@@ -27,15 +27,17 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::delete('/appointments/{appointment}', [AppointmentsController::class, 'destroy']);
+
 Route::delete('/schedule/{schedule}', [ScheduleController::class, 'destroy']);
 
 Route::get(uri : '/modal', action: function () {
     return view(view: 'modal');
 });
 
+
 // Must be logged routes
 Route::group(['middleware' => 'auth'], function () {
+    Route::delete('/appointments/{appointment}', [AppointmentsController::class, 'destroy']);
     Route::get('calendar', [ScheduleController::class, 'index'])->name('schedules.index');
     Route::post('schedules', [ScheduleController::class, 'store']);
     Route::delete('schedules/{schedule}', [ScheduleController::class, 'destroy']);

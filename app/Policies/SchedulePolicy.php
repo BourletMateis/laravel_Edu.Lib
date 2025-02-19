@@ -61,6 +61,6 @@ class SchedulePolicy
      */
     public function forceDelete(User $user, Schedule $schedule): bool
     {
-        return false;
+        return $user->role === 'teacher';
     }
 }

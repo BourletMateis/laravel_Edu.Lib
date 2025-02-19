@@ -41,6 +41,7 @@ class AppointmentsController extends Controller
 
     public function destroy(AppointmentRequest $request)
     {
+        $this->authorize('delete', auth()->user());
         $appointment = Appointments::find($request->id);
             if ($appointment) {
             $appointment->delete();
