@@ -26,9 +26,20 @@ class ScheduleController extends Controller
     }
 
 
-    public function store(ScheduleRequest $request) // Utilisation de ScheduleRequest
+    public function store(ScheduleRequest $request)
     {
+        $validated = $request->validated();
+    
+        $schedule = Schedule::create([
+            'user_teacher_id' => Auth::id(),
+            'day' => $validated['day'],
+            'time_start' => $validated['time_start'],
+            'time_end' => $validated['time_end'],
+        ]);
+    
+        return response()->json(['message' => 'Plage horaire ajoutée', 'schedule' => $schedule]);
     }
+    
 
 
     public function destroy(Schedule $schedule) {
