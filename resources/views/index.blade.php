@@ -116,13 +116,15 @@
         const backToTopButton = document.querySelector('.back-to-top');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 250) {
-                backToTopButton.style.display = 'block';
-                setTimeout(() => {
-                    backToTopButton.style.opacity = 1;
-                }, 10);
+                backToTopButton.style.visibility = 'visible';
+                backToTopButton.style.opacity = 1;
             } else {
-                backToTopButton.style.display = 'none';
                 backToTopButton.style.opacity = 0;
+                setTimeout(() => {
+                    if (window.scrollY <= 250) {
+                        backToTopButton.style.visibility = 'hidden';
+                    }
+                }, 500);
             }
         });
 
@@ -132,6 +134,7 @@
                 behavior: 'smooth'
             });
         });
+
 
 
     </script>
