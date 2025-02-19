@@ -16,11 +16,12 @@ class ScheduleController extends Controller
 
         // Récupère les horaires du professeur connecté
         $schedules = Schedule::where('user_teacher_id', Auth::id())->get();
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
         // Calcul des créneaux horaires disponibles
         $availableSlots = $this->generateTimeSlots($startTime, $endTime);  // Utilisation des horaires dynamiques
 
-        return view('schedules', compact('schedules', 'availableSlots'));
+        return view('schedules', compact('schedules', 'availableSlots', 'days'));
     }
 
 
@@ -32,6 +33,18 @@ class ScheduleController extends Controller
             'time_end' => 'required|after:time_start',
 
         ]);
+
+        // Vérifier si l'horaire existe déjà pour cet enseignant
+        $exists = Schedule::where('user_teacher_id', Auth::id())
+            ->where('day', $request->day)
+            ->where('time_start', $request->time_start)
+            ->where('time_end', $request->time_end)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->route('schedules.index')
+                ->with('error', 'Cet horaire existe déjà.');
+        }
 
         // Enregistrement de l'horaire dans la base de données
         Schedule::create([

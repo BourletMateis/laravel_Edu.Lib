@@ -32,13 +32,9 @@
             <div class="form-group">
                 <label for="day">Jour</label>
                 <select id="day" name="day" required>
-                    <option value="Lundi">Lundi</option>
-                    <option value="Mardi">Mardi</option>
-                    <option value="Mercredi">Mercredi</option>
-                    <option value="Jeudi">Jeudi</option>
-                    <option value="Vendredi">Vendredi</option>
-                    <option value="Samedi">Samedi</option>
-                    <option value="Dimanche">Dimanche</option>
+                    @foreach($days as $key => $item)
+                        <option value="{{ $item }}">{{ __('pages.days.'.$item) }}</option>
+                    @endforeach
                 </select>
             </div>
 
@@ -68,7 +64,7 @@
         <h3>Mes horaires</h3>
         @foreach ($schedules as $schedule)
             <div class="schedule-item">
-                <p>{{ $schedule->day }} | {{ $schedule->time_start }} - {{ $schedule->time_end }} </p>
+                <p>{{ __('pages.days.'.$schedule->day) }} | {{ $schedule->time_start }} - {{ $schedule->time_end }}</p>
 
                 <form action="{{ url('schedules/' . $schedule->id) }}" method="POST" style="display:inline;">
                     @csrf
