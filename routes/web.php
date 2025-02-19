@@ -42,6 +42,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('schedules', [ScheduleController::class, 'store']);
     Route::delete('schedules/{schedule}', [ScheduleController::class, 'destroy']);
     Route::middleware(['auth'])->get('schedule_load', [ScheduleController::class, 'load_schedule'])->name('schedule_load');
+    Route::get('profil', action: function () {
+        return view(view: 'profil');
+    })->name('profil');
 
 });
 
