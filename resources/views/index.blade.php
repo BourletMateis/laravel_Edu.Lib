@@ -57,6 +57,15 @@
             </div>
             <a href="#" class="learn-more">En savoir plus</a>
         </div>
+
+
+        <div class="cta-div">
+            <h2>Et pourquoi pas vous ?</h2>
+            <p>Commencez dès maintenant et découvrez tous les avantages de EduLib.</p>
+            <button class="cta-button">Inscrivez-vous</button>
+        </div>
+
+
         <div class="info-item">
             <h2>FAQ - Questions Fréquemment Posées</h2>
             <div class="faq-section">
