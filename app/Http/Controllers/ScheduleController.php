@@ -44,6 +44,18 @@ class ScheduleController extends Controller
                 ->with('error', 'Cet horaire existe déjà.');
         }
 
+        // Vérifier si l'horaire existe déjà pour cet enseignant
+        $exists = Schedule::where('user_teacher_id', Auth::id())
+            ->where('day', $request->day)
+            ->where('time_start', $request->time_start)
+            ->where('time_end', $request->time_end)
+            ->exists();
+
+        if ($exists) {
+            return redirect()->route('schedules.index')
+                ->with('error', 'Cet horaire existe déjà.');
+        }
+
         // Enregistrement de l'horaire dans la base de données
         Schedule::create([
             'user_teacher_id' => Auth::id(),
