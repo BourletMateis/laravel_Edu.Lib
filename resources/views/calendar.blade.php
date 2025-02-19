@@ -36,7 +36,7 @@
                                 <option value="{{ $item }}">{{ __('pages.days.'.$item) }}</option>
                             @endforeach
                         </select>
- 
+
                     </div>
 
                     <div class="form-group mt-3">
@@ -58,8 +58,12 @@
                     </div>
 
                     <div class="modal-footer mt-4">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="$('#scheduleModal').modal('hide');">Annuler</button>
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+
+                        @can('create', new \App\Models\Schedule())
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        @endcan
                     </div>
                 </form>
                 <hr>
@@ -72,7 +76,9 @@
                 <form action="{{ url('schedules/' . $schedule->id) }}" method="POST" style="display:inline;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                    @can('delete', new \App\Models\Schedule())
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    @endcan
                 </form>
             </div>
             <hr>
@@ -111,12 +117,12 @@
             initialView: 'dayGridWeek',
             locale: 'fr',
             headerToolbar: {
-                left: 'prev,next today',  
+                left: 'prev,next today',
                 center: 'title',
                 right: 'dayGridMonth,dayGridWeek,dayGridDay,timeslot'
             },
             buttonText: {
-                timeslot: "+",  
+                timeslot: "+",
                 today: "Aujourd'hui",
                 month: 'Mois',
                 week: 'Semaine',
@@ -130,9 +136,9 @@
                     }
                 }
             },
-            events: '/booking',  
+            events: '/booking',
             eventClick: function(info) {
-                var eventDetails = 
+                var eventDetails =
                                    "Matière: " + (info.event.extendedProps.subject || "Non spécifié") + "\n" +
                                    "Description: " + (info.event.extendedProps.description || "Non spécifié") + "\n" +
                                    "Email: " + (info.event.extendedProps.email || "Non spécifié") + "\n" +
@@ -151,7 +157,7 @@
             if (confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?')) {
             var eventId = this.getAttribute('data-event-id');
             $.ajax({
-                url: '/appointments/' + eventId,  
+                url: '/appointments/' + eventId,
                 method: 'DELETE',
                 data: {
                 _token: $('meta[name="csrf-token"]').attr('content'),
@@ -159,8 +165,8 @@
                 },
                 success: function(response) {
                 alert(response.message);
-                $('#myModal').modal('hide'); 
-                calendar.refetchEvents();     
+                $('#myModal').modal('hide');
+                calendar.refetchEvents();
                 },
                 error: function(response) {
                 alert('Erreur lors de la suppression. Veuillez réessayer.');

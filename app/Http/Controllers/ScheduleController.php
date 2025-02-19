@@ -10,19 +10,20 @@ use Carbon\Carbon;
 class ScheduleController extends Controller
 {
     public function index(Request $request) {
+        $this->authorize('view', new Schedule());
+
         $startTime = $request->input('start_time', '07:00');
         $endTime = $request->input('end_time', '21:00');
 
         $schedules = Schedule::where('user_teacher_id', Auth::id())->get();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        
-        $availableSlots = $this->generateTimeSlots($startTime, $endTime);  
-        
+
+        $availableSlots = $this->generateTimeSlots($startTime, $endTime);
+
         return view('calendar', compact('schedules', 'availableSlots','days'));
 
     }
 
-    
     public function store(Request $request) {
         // Validation des données du formulaire
         $request->validate([
@@ -68,7 +69,7 @@ class ScheduleController extends Controller
 
         // Redirection avec un message de succès
         return redirect()->route('schedules.index')->with('success', 'Horaire ajouté');
-    } 
+    }
 
     public function destroy(Schedule $schedule) {
         // Supprimer l'horaire si c'est le professeur connecté qui en est l'auteur
