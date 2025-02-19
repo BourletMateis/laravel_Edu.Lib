@@ -226,8 +226,7 @@
 
 
 <?php
-require_once 'C:\xampp\htdocs\laravel_Edu.Lib\app\View\toolbarAdmin.php';
-
+require_once base_path('app/View/toolbarAdmin.php');
 // Créer une instance de la barre d'outils
 $toolbar = new Toolbar();
 
