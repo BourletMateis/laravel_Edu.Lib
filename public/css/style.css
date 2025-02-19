@@ -1,0 +1,111 @@
+:root {
+    --primary-color: #40916C; /* Couleur verte principale */
+    --secondary-color: #2D6A4F; /* Couleur verte plus foncée */
+    --accent-color: #1B4332; /* Couleur verte encore plus foncée */
+    --background-color: #ffffff; /* Couleur de fond blanche */
+    --text-color: #333333; /* Couleur du texte */
+    --light-bg-color: #f0f0f0; /* Couleur de fond clair pour les sections */
+}
+
+body {
+    margin: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family:"Inter";
+}
+
+header {
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .edulib {
+    list-style: none;
+}
+nav .edulib a {
+    color: var(--background-color); /* Utilisation de la couleur de fond blanche pour le texte EduLib */
+    text-decoration: none;
+    font-size: 30px;
+    font-family: "Lobster", sans-serif;
+}
+
+nav .menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+nav .menu li {
+    list-style: none;
+}
+
+nav .menu a {
+    text-decoration: none;
+    color: var(--background-color); /* Couleur blanche pour les liens */
+    font-size: 16px;
+}
+
+main .title {
+    background-color: var(--primary-color);
+    color: var(--background-color); /* Texte en blanc */
+    padding: 50px 20px;
+    text-align: center;
+    font-family:"Inter";
+}
+
+main .title h1 {
+    font-size: 3em;
+}
+
+main .title p {
+    font-size: 1.5em;
+}
+
+main .title .button {
+    background-color: var(--secondary-color); /* Couleur verte plus foncée */
+    color: var(--background-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+main .title .button:hover {
+    background-color: var(--accent-color); /* Couleur verte encore plus foncée */
+}
+
+main .info {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+main .info .info-item {
+    background-color: var(--light-bg-color); /* Couleur de fond clair pour les sections */
+    padding: 20px;
+    border-radius: 5px;
+    width: 30%;
+}
+
+main .info .info-item h2 {
+    color: var(--primary-color); /* Couleur verte pour les titres */
+}
+
+main .info .info-item .learn-more {
+    text-decoration: none;
+    color: var(--primary-color); /* Couleur verte pour les liens */
+}
+
+main .info .info-item .learn-more:hover {
+    text-decoration: underline;
+}

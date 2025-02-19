@@ -8,14 +8,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/index', function () {
+    return view('index');
+});
+
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/booking', [AppointmentsController::class, 'index']);
 Route::get('/reservation', [AppointmentsController::class, 'showReservation'])->name('reservation');
+Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
 Route::get('/calendar', function () {
     return view('calendar');
 });
+
+Route::get(uri : '/modal', action: function () {
+    return view(view: 'modal');
+});
+
+Route::delete('/appointments/{id}', [AppointmentsController::class, 'destroy']);
 
 
 Route::get('/test', function () {
@@ -27,3 +39,5 @@ Route::get('/test', function () {
 use App\Http\Controllers\ProfesseurController;
 
 Route::get('/reservation', [ProfesseurController::class, 'index']);
+
+
