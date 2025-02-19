@@ -18,9 +18,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
 Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
-Route::get('/calendar', action: function () {
-    return view('calendar');
-});
 
 Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
 
@@ -37,12 +34,12 @@ Route::get(uri : '/modal', action: function () {
     return view(view: 'modal');
 });
 
+// Must be logged routes
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('calendar', [ScheduleController::class, 'index'])->name('schedules.index');
+    Route::post('schedules', [ScheduleController::class, 'store']);
+    Route::delete('schedules/{schedule}', [ScheduleController::class, 'destroy']);
+    Route::middleware(['auth'])->get('schedule_load', [ScheduleController::class, 'load_schedule'])->name('schedule_load');
 
+});
 
-
-Route::middleware(['auth'])->get('calendar', [ScheduleController::class, 'index'])->name('schedules.index');
-Route::middleware(['auth'])->post('schedules', [ScheduleController::class, 'store']);
-Route::middleware(['auth'])->delete('schedules/{schedule}', [ScheduleController::class, 'destroy']);
-
-
-Route::middleware(['auth'])->get('schedule_load', [ScheduleController::class, 'load_schedule'])->name('schedule_load');
