@@ -15,6 +15,9 @@ Route::get('/index', function () {
 
 Route::get('/booking', [AppointmentsController::class, 'index']);
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
+Route::get('/reservation', [AppointmentsController::class, 'showReservation'])->name('reservation');
 Route::get('/calendar', function () {
     return view('calendar');
 });
