@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\ProfesseurController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ScheduleController;
@@ -17,7 +18,7 @@ Route::get('/booking', [AppointmentsController::class, 'index']);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
-Route::get('/reservation', [AppointmentsController::class, 'showReservation'])->name('reservation');
+Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
 Route::get('/calendar', function () {
     return view('calendar');
 });
