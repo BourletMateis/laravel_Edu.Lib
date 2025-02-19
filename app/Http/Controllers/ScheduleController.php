@@ -11,6 +11,8 @@ use App\Http\Requests\ScheduleRequest;
 class ScheduleController extends Controller
 {
     public function index(Request $request) {
+        $this->authorize('view', new Schedule());
+
         $startTime = $request->input('start_time', '07:00');
         $endTime = $request->input('end_time', '21:00');
 
@@ -26,30 +28,8 @@ class ScheduleController extends Controller
 
     public function store(ScheduleRequest $request) // Utilisation de ScheduleRequest
     {
-        // Vérifier si l'horaire existe déjà pour cet enseignant
-        $exists = Schedule::where('user_teacher_id', Auth::id())
-            ->where('day', $request->day)
-            ->where('time_start', $request->time_start)
-            ->where('time_end', $request->time_end)
-            ->exists();
-
-        if ($exists) {
-            return redirect()->route('schedules.index')
-                ->with('error', 'Cet horaire existe déjà.');
-        }
-
-        // Enregistrement de l'horaire dans la base de données
-        Schedule::create([
-            'user_teacher_id' => Auth::id(),
-            'booked' => false,
-            'day' => $request->day,
-            'time_start' => $request->time_start,
-            'time_end' => $request->time_end,
-        ]);
-
-        // Redirection avec un message de succès
-        return redirect()->route('schedules.index')->with('success', 'Horaire ajouté');
     }
+
 
     public function destroy(Schedule $schedule) {
         // Supprimer l'horaire si c'est le professeur connecté qui en est l'auteur

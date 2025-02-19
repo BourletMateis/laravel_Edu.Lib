@@ -37,6 +37,7 @@
                                 <option value="{{ $item }}">{{ __('pages.days.'.$item) }}</option>
                             @endforeach
                         </select>
+ 
                     </div>
 
                     <div class="form-group mt-3">
@@ -58,24 +59,31 @@
                     </div>
 
                     <div class="modal-footer mt-4">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="$('#scheduleModal').modal('hide');">Annuler</button>
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+
+                        @can('create', new \App\Models\Schedule())
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                        @endcan
                     </div>
                 </form>
                 <hr>
                 <!-- Liste des horaires -->
-                <h3>Mes horaires</h3>
-                @foreach ($schedules as $schedule)
-                    <div class="schedule-item">
-                        <p>{{ __('pages.days.'.$schedule->day) }} | {{ $schedule->time_start }} - {{ $schedule->time_end }}</p>
-                        <form action="{{ url('schedules/' . $schedule->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                        </form>
-                    </div>
-                    <hr>
-                @endforeach
+        <h3>Mes horaires</h3>
+        @foreach ($schedules as $schedule)
+            <div class="schedule-item">
+                <p>{{ __('pages.days.'.$schedule->day) }} | {{ $schedule->time_start }} - {{ $schedule->time_end }}</p>
+
+                <form action="{{ url('schedules/' . $schedule->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    @can('delete', new \App\Models\Schedule())
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    @endcan
+                </form>
+            </div>
+            <hr>
+        @endforeach
             </div>
         </div>
     </div>
@@ -148,33 +156,17 @@
                 }
             },
             eventClick: function(info) {
-                var isBookingEvent = false;
-                if (info.event.source.url === '/booking') {
-                    isBookingEvent = true;
-                    var eventDetails =
-                        "Matière: " + (info.event.extendedProps.subject || "Non spécifié") + "\n" +
-                        "Description: " + (info.event.extendedProps.description || "Non spécifié") + "\n" +
-                        "Prix: " + (info.event.extendedProps.price || "Non spécifié")+"€" + "\n" +
-                        "Email: " + (info.event.extendedProps.email || "Non spécifié") + "\n" +
-                        "Début: " + (info.event.start ? info.event.start.toLocaleString() : "Non spécifié") + "\n" +
-                        "Fin: " + (info.event.end ? info.event.end.toLocaleString() : "Non spécifié");
-                    document.getElementById('eventDetails').innerText = "";
-                    document.getElementById('eventDetails').innerText = eventDetails;
-                    document.getElementById('myModalLabel').innerText = info.event.title;
-                    document.getElementById('deleteAppointments').setAttribute('data-event-id', info.event.id);
-                    document.getElementById('deleteAppointments').setAttribute('data-event-type', 'booking'); // Marqueur pour l'événement de réservation
-                    $('#myModal').modal('show');
-                } else {
-                    isBookingEvent = false;
-                    var eventDetails =
-                        "Début: " + (info.event.start ? info.event.start.toLocaleString() : "Non spécifié") + "\n" +
-                        "Fin: " + (info.event.end ? info.event.end.toLocaleString() : "Non spécifié");
-                    document.getElementById('eventDetails').innerText = eventDetails;
-                    document.getElementById('myModalLabel').innerText = info.event.title;
-                    document.getElementById('deleteAppointments').setAttribute('data-event-id', info.event.id);
-                    document.getElementById('deleteAppointments').setAttribute('data-event-type', 'schedule'); // Marqueur pour l'événement d'horaire
-                    $('#myModal').modal('show');
-                }
+                var eventDetails = 
+                                   "Matière: " + (info.event.extendedProps.subject || "Non spécifié") + "\n" +
+                                   "Description: " + (info.event.extendedProps.description || "Non spécifié") + "\n" +
+                                   "Email: " + (info.event.extendedProps.email || "Non spécifié") + "\n" +
+                                   "Début: " + (info.event.start ? info.event.start.toLocaleString() : "Non spécifié") + "\n" +
+                                   "Fin: " + (info.event.end ? info.event.end.toLocaleString() : "Non spécifié");
+
+                document.getElementById('eventDetails').innerText = eventDetails;
+                document.getElementById('myModalLabel').innerText = info.event.title
+                document.getElementById('deleteAppointments').setAttribute('data-event-id', info.event.id);
+                $('#myModal').modal('show');
             }
         });
         calendar.render();
