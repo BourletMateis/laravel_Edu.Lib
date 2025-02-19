@@ -85,6 +85,15 @@
         <main class="py-4"x>
             @yield('content')
         </main>
+
+        <footer class="footer">
+            <div class="footer-left">
+                <p>Made with love in France</p>
+            </div>
+            <div class="footer-right">
+                <p>&copy; 2025 EduLib. Tous droits réservés.</p>
+            </div>
+        </footer>
         <script src="{{ asset('js/app.js') }}"></script>
     </div>
 </body>

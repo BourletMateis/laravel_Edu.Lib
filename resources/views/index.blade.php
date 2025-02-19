@@ -112,21 +112,17 @@
             });
         });
 
-
-        // BACK TOP TOP BUTTON
-
+        // Bouton Retour en haut
         const backToTopButton = document.querySelector('.back-to-top');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
+            if (window.scrollY > 250) {
                 backToTopButton.style.display = 'block';
                 setTimeout(() => {
                     backToTopButton.style.opacity = 1;
                 }, 10);
             } else {
+                backToTopButton.style.display = 'none';
                 backToTopButton.style.opacity = 0;
-                setTimeout(() => {
-                    backToTopButton.style.display = 'none';
-                }, 500);
             }
         });
 
@@ -136,6 +132,7 @@
                 behavior: 'smooth'
             });
         });
+
 
     </script>
 

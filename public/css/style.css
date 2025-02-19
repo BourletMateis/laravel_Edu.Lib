@@ -198,7 +198,8 @@ main .info .info-item .learn-more:hover {
     box-shadow: 0 0 10px var(--secondary-color);
     font-size: 16px;
     transition: opacity 0.5s ease-in-out;
-    opacity: 0;
+    opacity: 1;
+    margin-bottom: 3em;
 }
 
 .back-to-top:hover {
@@ -206,3 +207,31 @@ main .info .info-item .learn-more:hover {
     transition: ease-in-out 0.2s;
 }
 
+
+/*                       Footer                    */
+.footer {
+    color: var(--primary-color);
+    padding: 0.5em;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    z-index: -999;
+}
+.footer-left {
+    margin-left: 20px;
+}
+.footer-right {
+    margin-right: 20px;
+}
+.footer a {
+    color: #007bff;
+    text-decoration: none;
+    margin: 0 10px;
+}
+.footer a:hover {
+    text-decoration: underline;
+}
