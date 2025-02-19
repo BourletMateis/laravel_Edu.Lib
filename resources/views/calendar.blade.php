@@ -8,11 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/bookingCalendar.css') }}">
-
     <link rel="stylesheet" href="{{ asset('css/toolbarAdmin.css') }}">
-
-
-
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
