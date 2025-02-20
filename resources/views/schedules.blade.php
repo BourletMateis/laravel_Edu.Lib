@@ -4,7 +4,7 @@
     <div class="container">
         <h2>Mes Horaires</h2>
 
-        <!-- Message de succès ou d'erreur -->
+        <!-- Success or error message -->
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @elseif(session('error'))
@@ -25,7 +25,7 @@
         </form>
         -->
 
-        <!-- Formulaire pour ajouter un horaire -->
+        <!-- Form to add a schedule -->
         <h3>Ajouter un horaire</h3>
         <form action="{{ url('schedules') }}" method="POST">
             @csrf
@@ -60,7 +60,7 @@
 
         <hr>
 
-        <!-- Liste des horaires -->
+        <!-- List of times -->
         <h3>Mes horaires</h3>
         @foreach ($schedules as $schedule)
             <div class="schedule-item">

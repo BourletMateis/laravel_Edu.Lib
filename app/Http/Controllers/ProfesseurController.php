@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;  // Utilisation du modèle User au lieu de Professeur
+use App\Models\User;  // Using the User model instead of Teacher
 
 class ProfesseurController extends Controller
 {
     public function index()
     {
-        // Récupérer uniquement les utilisateurs où 'is_teacher' est égal à 1
+        // Get only users where 'is_teacher' is 1
         $professeurs = User::where('role', "teacher")->get();
 
-        // Passer les professeurs à la vue 'reservation'
+        // Switch teachers to the 'reservation' view
         return view('reservation', compact('professeurs'));
     }
 }
