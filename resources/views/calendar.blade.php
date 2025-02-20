@@ -82,23 +82,6 @@
                         @endcan
                     </div>
                 </form>
-                <hr>
-                <!-- Liste des horaires -->
-        <h3>Mes horaires</h3>
-        @foreach ($schedules as $schedule)
-            <div class="schedule-item">
-                <p>{{ __('pages.days.'.$schedule->day) }} | {{ $schedule->time_start }} - {{ $schedule->time_end }}</p>
-
-                <form action="{{ url('schedules/' . $schedule->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    @can('delete', new \App\Models\Schedule())
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                    @endcan
-                </form>
-            </div>
-            <hr>
-        @endforeach
             </div>
         </div>
     </div>

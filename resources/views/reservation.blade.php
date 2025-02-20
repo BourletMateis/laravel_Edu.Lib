@@ -66,50 +66,63 @@
     });
 
     function fetchSchedules() {
-      fetch('/list')
-        .then(response => response.json())
-        .then(data => {
-          let scheduleContainer = document.getElementById('scheduleList');
-          scheduleContainer.innerHTML = ''; 
+  fetch('/list')
+    .then(response => response.json())
+    .then(data => {
+      let scheduleContainer = document.getElementById('scheduleList');
+      scheduleContainer.innerHTML = ''; 
 
-          let selectedProf = document.getElementById('prof-selector').value.split('|')[0];
+      let selectedProf = document.getElementById('prof-selector').value.split('|')[0];
 
-          let filteredSchedules = data.filter(schedule => schedule.user_teacher_id == selectedProf);
+      // 1. Filtrer les disponibilités du professeur sélectionné
+      let filteredSchedules = data.filter(schedule => schedule.user_teacher_id == selectedProf);
 
-          let groupedSchedules = {};
-          filteredSchedules.forEach(schedule => {
-            if (!groupedSchedules[schedule.day]) {
-              groupedSchedules[schedule.day] = [];
-            }
-            groupedSchedules[schedule.day] = [...new Set([...groupedSchedules[schedule.day], ...schedule.hours])]; // Évite les doublons
-          });
+      // 2. Regrouper par jour en fusionnant les horaires
+      let groupedSchedules = {};
+      filteredSchedules.forEach(schedule => {
+        if (!groupedSchedules[schedule.day]) {
+          groupedSchedules[schedule.day] = [];
+        }
+        groupedSchedules[schedule.day] = [...new Set([...groupedSchedules[schedule.day], ...schedule.hours])]; // Évite les doublons
+      });
 
-          Object.entries(groupedSchedules).forEach(([day, hours]) => {
-            let dayButton = document.createElement('button');
-            dayButton.innerHTML = `<strong>Jour :</strong> ${day} <br><hr>`;
-            dayButton.classList.add('day-button');
-            scheduleContainer.appendChild(dayButton);
+      // 3. Affichage des jours et horaires
+      Object.entries(groupedSchedules).forEach(([day, hours]) => {
+        let dayButton = document.createElement('button');
+        dayButton.innerHTML = `<strong>Jour :</strong> ${day} <br><hr>`;
+        dayButton.classList.add('day-button');
+        scheduleContainer.appendChild(dayButton);
 
-            dayButton.onclick = () => {
-              hours.forEach(hour => {
-                let hourButton = document.createElement('button');
-                hourButton.classList.add('hour-button');
-                hourButton.setAttribute('data-day', day);
-                hourButton.innerHTML = `<strong>Heure :</strong> ${hour} <br><hr>`;
-                hourButton.onclick = () => {
-                  selectHour(day, hour);
-                };
-                scheduleContainer.appendChild(hourButton);
-              });
-            };
-          });
+        // Créer un conteneur pour les horaires (caché au début)
+        let hourContainer = document.createElement('div');
+        hourContainer.classList.add('hour-container');
+        hourContainer.style.display = 'none';
+        scheduleContainer.appendChild(hourContainer);
 
-          if (Object.keys(groupedSchedules).length === 0) {
-            scheduleContainer.innerHTML = "<p>Aucune disponibilité pour ce professeur.</p>";
-          }
-        })
-        .catch(error => console.error("Erreur lors de la récupération :", error));
-    }
+        hours.forEach(hour => {
+          let hourButton = document.createElement('button');
+          hourButton.classList.add('hour-button');
+          hourButton.setAttribute('data-day', day);
+          hourButton.innerHTML = `<strong>Heure :</strong> ${hour} <br><hr>`;
+          hourButton.onclick = () => {
+            selectHour(day, hour);
+          };
+          hourContainer.appendChild(hourButton);
+        });
+
+        // Ajouter un événement de clic pour afficher/masquer les horaires
+        dayButton.onclick = () => {
+          hourContainer.style.display = hourContainer.style.display === 'none' ? 'block' : 'none';
+        };
+      });
+
+      if (Object.keys(groupedSchedules).length === 0) {
+        scheduleContainer.innerHTML = "<p>Aucune disponibilité pour ce professeur.</p>";
+      }
+    })
+    .catch(error => console.error("Erreur lors de la récupération :", error));
+}
+
 
 
     let selectedDay, selectedHour;
