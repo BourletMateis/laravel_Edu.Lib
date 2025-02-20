@@ -33,7 +33,7 @@ Route::delete('/schedule/{schedule}', [ScheduleController::class, 'destroy']);
 Route::get(uri : '/modal', action: function () {
     return view(view: 'modal');
 });
-Route::get('list', [ScheduleController::class, 'ScheduleCalendar']);
+Route::get('list', [ScheduleController::class, 'ScheduleCalendar'])->name('schedule.list');
 Route::get('/schedule-view', [ScheduleController::class, 'showSchedules']);
 
 Route::post('createappointment', [AppointmentsController::class, 'createAppointments']);

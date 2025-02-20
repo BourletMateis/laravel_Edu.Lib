@@ -66,11 +66,11 @@
     });
 
     function fetchSchedules() {
-  fetch('/list')
+  fetch("{{ route('schedule.list') }}")
     .then(response => response.json())
     .then(data => {
       let scheduleContainer = document.getElementById('scheduleList');
-      scheduleContainer.innerHTML = ''; 
+      scheduleContainer.innerHTML = '';
 
       let selectedProf = document.getElementById('prof-selector').value.split('|')[0];
 
@@ -141,7 +141,7 @@
         alert("Veuillez sélectionner un mardi.");
         return;
       }
-      
+
       alert(`Réservation confirmée pour ${selectedDay} à ${selectedHour} le ${chosenDate}`);
       createAppointments(chosenDate, selectedHour);
 
@@ -155,29 +155,29 @@
   function createAppointments(chosenDate,hour) {
     const selectedTeacherId = document.getElementById('prof-selector').value.split('|')[0];
     let user = @json(Auth::id());
-    
+
     $.ajax({
-    url: '/createappointment', 
-    method: 'POST', 
+    url: '/createappointment',
+    method: 'POST',
     data: {
         _token: $('meta[name="csrf-token"]').attr('content'),
-        date: chosenDate, 
+        date: chosenDate,
         start_time: hour + ":00",
         end_time: (parseInt(hour) + 1) + ":00:00",
-        user_teacher_id: selectedTeacherId, 
-        user_student_id: user, 
-        title: "Réservation de rendez-vous", 
+        user_teacher_id: selectedTeacherId,
+        user_student_id: user,
+        title: "Réservation de rendez-vous",
         description: "Rendez-vous avec le professeur",
         price: 11.88
     },
     success: function(response) {
-        alert("Réservation effectuée avec succès."); 
-        closePopup(); 
-        fetchSchedules(); 
+        alert("Réservation effectuée avec succès.");
+        closePopup();
+        fetchSchedules();
     },
     error: function(xhr, status, error) {
-        console.error("Erreur:", error); 
-        alert('Erreur lors de la réservation.'); 
+        console.error("Erreur:", error);
+        alert('Erreur lors de la réservation.');
     }
 });
 }
