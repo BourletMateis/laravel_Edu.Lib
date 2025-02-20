@@ -35,7 +35,7 @@ Route::get('list', [ScheduleController::class, 'ScheduleCalendar']);
 Route::get('/schedule-view', [ScheduleController::class, 'showSchedules']);
 
 Route::post('createappointment', [AppointmentsController::class, 'createAppointments']);
-
+Route::get('load_schedule', [ScheduleController::class, 'load_schedule'])->name('load_schedule');
 Route::group(['middleware' => 'auth'], function () {
     Route::delete('/appointments/{appointment}', [AppointmentsController::class, 'destroy']);
     Route::get('calendar', [ScheduleController::class, 'index'])->name('schedules.index');

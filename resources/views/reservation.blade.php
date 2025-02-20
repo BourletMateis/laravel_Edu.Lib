@@ -73,7 +73,7 @@
           let scheduleContainer = document.getElementById('scheduleList');
           scheduleContainer.innerHTML = ''; 
 
-          let selectedProf = document.getElementById('prof-selector').value.split('|')[0]; // Récupère l'ID du professeur
+          let selectedProf = document.getElementById('prof-selector').value.split('|')[0]; 
 
           data.forEach(schedule => {
             if (schedule.user_teacher_id == selectedProf) {
@@ -158,10 +158,7 @@
         alert('Erreur lors de la réservation.'); 
     }
 });
-
-
 }
-
   </script>
 </body>
 </html>
