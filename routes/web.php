@@ -17,8 +17,6 @@ Route::get('/index', function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
-
 Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
 
 
@@ -45,6 +43,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('profil', action: function () {
         return view(view: 'profil');
     })->name('profil');
+
+
+    Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
 
 });
 

@@ -11,10 +11,11 @@ class AppointmentsPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAdmin(User $user, Appointments $appointments): bool
     {
-        return false;
+        return $user->role === 'admin';
     }
+
 
     /**
      * Determine whether the user can view the model.

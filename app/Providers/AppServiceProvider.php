@@ -1,9 +1,12 @@
 <?php
 namespace App\Providers;
 
+use App\Models\Appointments;
 use App\Models\Schedule;
+use App\Policies\AppointmentsPolicy;
 use App\Policies\ArticlePolicy;
 use App\Policies\SchedulePolicy;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use App\Policies\RolePolicy;
@@ -34,5 +37,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Schedule::class, SchedulePolicy::class);
+        Gate::policy(Appointments::class, AppointmentsPolicy::class);
     }
 }

@@ -10,6 +10,8 @@ class AppointmentsController extends Controller
 {
     public function index()
     {
+        $this->authorize('viewAdmin', new Appointments());
+
         Carbon::setLocale('fr');
         $appointments = Appointments::where('user_teacher_id', auth()->id())->get();
 
