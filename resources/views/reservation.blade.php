@@ -66,10 +66,50 @@
             });
         }
 
+<<<<<<< HEAD
 
         document.addEventListener("DOMContentLoaded", function(){
             fetchSchedules();
             document.getElementById('prof-selector').addEventListener("change", fetchSchedules);
+=======
+      // 3. Affichage des jours et horaires
+        const daysTranslations = {
+            monday: 'Lundi',
+            tuesday: 'Mardi',
+            wednesday: 'Mercredi',
+            thursday: 'Jeudi',
+            friday: 'Vendredi',
+            saturday: 'Samedi',
+            sunday: 'Dimanche'
+        };
+
+      Object.entries(groupedSchedules).forEach(([day, hours]) => {
+        let dayButton = document.createElement('button');
+
+          // Vérifier si la traduction existe, sinon garder le jour en anglais
+          let translatedDay = daysTranslations[day] || day;
+
+        dayButton.innerHTML = `<strong>Jour :</strong> ${translatedDay} <br><hr>`;
+        dayButton.classList.add('day-button');
+        scheduleContainer.appendChild(dayButton);
+
+
+        // Créer un conteneur pour les horaires (caché au début)
+        let hourContainer = document.createElement('div');
+        hourContainer.classList.add('hour-container');
+        hourContainer.style.display = 'none';
+        scheduleContainer.appendChild(hourContainer);
+
+        hours.forEach(hour => {
+          let hourButton = document.createElement('button');
+          hourButton.classList.add('hour-button');
+          hourButton.setAttribute('data-day', day);
+          hourButton.innerHTML = `<strong>Heure :</strong> ${hour} <br><hr>`;
+          hourButton.onclick = () => {
+            selectHour(day, hour);
+          };
+          hourContainer.appendChild(hourButton);
+>>>>>>> mailAndAppointment
         });
 
         // Fonction pour récupérer les horaires disponibles
@@ -104,6 +144,7 @@
                         hourContainer.style.display = 'none';
                         scheduleContainer.appendChild(hourContainer);
 
+<<<<<<< HEAD
                         hours.forEach(hour => {
                             let hourButton = document.createElement('button');
                             hourButton.classList.add('hour-button');
@@ -142,6 +183,13 @@
                             }
                         };
                     });
+=======
+      alert(`Réservation confirmée pour ${selectedDay} à ${selectedHour} le ${chosenDate}`);
+      createAppointments(chosenDate, selectedHour);
+      closePopup();
+
+    }
+>>>>>>> mailAndAppointment
 
                     if (Object.keys(groupedSchedules).length === 0) {
                         scheduleContainer.innerHTML = "<p>Aucune disponibilité pour ce professeur.</p>";
@@ -160,6 +208,7 @@
                 Choisissez une date (seulement mardi) et confirmez votre réservation.`;
         }
 
+<<<<<<< HEAD
         function finalizeReservation() {
             let chosenDate = document.getElementById('date-picker').value;
             if (!chosenDate) {
@@ -208,5 +257,49 @@
         }
     </script>
  </div>
+=======
+    $.ajax({
+    url: '/createappointment',
+    method: 'POST',
+    data: {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        date: chosenDate,
+        start_time: hour + ":00",
+        end_time: (parseInt(hour) + 1) + ":00:00",
+        user_teacher_id: selectedTeacherId,
+        user_student_id: user,
+        title: "Réservation de rendez-vous",
+        description: "Rendez-vous avec le professeur",
+        price: 11.88
+    },
+    success: function(response) {
+        alert("Réservation effectuée avec succès.");
+        closePopup();
+        fetchSchedules();
+
+        // Après la réservation réussie, on envoie l'email
+        sendEmailConfirmation();
+    },
+    error: function(xhr, status, error) {
+        console.error("Erreur:", error);
+        alert('Erreur lors de la réservation.');
+    }
+});
+
+  function sendEmailConfirmation() {
+      $.ajax({
+          url: '{{ route('sendmail') }}',
+          method: 'GET',
+          success: function(response) {
+              alert("Email de confirmation envoyé !");
+          },
+          error: function(xhr, status, error) {
+              console.error("Erreur d'envoi d'email:", error);
+          }
+      });
+  }
+}
+  </script>
+>>>>>>> mailAndAppointment
 </body>
 @endsection
