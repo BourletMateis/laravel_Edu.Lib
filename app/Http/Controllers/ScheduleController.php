@@ -82,32 +82,30 @@ class ScheduleController extends Controller
         return $slots;
     }
 
-    public function load_schedule()
-    {
-        $this->authorize('view', new Schedule());
+    public function ScheduleCalendar() {
         Carbon::setLocale('fr');
-        $schedules = schedule::where('user_teacher_id', auth()->id())->get();
+        $schedules = schedule::all();
 
-        $events = $schedules->map(function ($schedules) {
-            // Formatage des dates
-            $start = Carbon::parse($schedules->day . ' ' . $schedules->time_start)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
-            $end = Carbon::parse($schedules->day . ' ' . $schedules->time_end)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
-            $end_time = Carbon::parse($schedules->time_end)->locale('fr')->isoFormat('HH:mm');
+        $list_schedules = $schedules->map(function ($schedules) {
+            $start = Carbon::parse($schedules->time_start)->locale('fr'); //convertit les heures de debut
+            $end = Carbon::parse($schedules->time_end)->locale('fr'); //convertit les heures de fin
+
+            $hours = []; //les heures en tableaux
 
 
-
-            $user = User::find($schedules->user_teacher_id);
+            for ($current = $start; $current->lt($end); $current->addHour()) { //calcule end - start = n - 1
+                $hours[] = $current->isoFormat('HH:mm');
+            }
 
             return [
-                'id' => $schedules->id,
-                'start' => $start,
-                'end' => $end,
-                "className"=> "event-schedule-load",
-
-
+                'day' => $schedules->day,
+                'user_teacher_id' => $schedules->user_teacher_id,
+                'hours' => $hours,
             ];
         });
 
-        return response()->json($events);
+        return response()->json($list_schedules); //met en format json
+
     }
+
 }

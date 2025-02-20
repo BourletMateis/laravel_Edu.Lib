@@ -31,9 +31,11 @@ Route::delete('/schedule/{schedule}', [ScheduleController::class, 'destroy']);
 Route::get(uri : '/modal', action: function () {
     return view(view: 'modal');
 });
+Route::get('list', [ScheduleController::class, 'ScheduleCalendar']);
+Route::get('/schedule-view', [ScheduleController::class, 'showSchedules']);
 
+Route::post('createappointment', [AppointmentsController::class, 'createAppointments']);
 
-// Must be logged routes
 Route::group(['middleware' => 'auth'], function () {
     Route::delete('/appointments/{appointment}', [AppointmentsController::class, 'destroy']);
     Route::get('calendar', [ScheduleController::class, 'index'])->name('schedules.index');
