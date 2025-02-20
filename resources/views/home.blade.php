@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+    <head>
+        <link rel="stylesheet" href="{{ asset('css/style_register.css') }}">
+    </head>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header"><i class="fa-solid fa-graduation-cap"></i> {{ __('Dashboard') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))

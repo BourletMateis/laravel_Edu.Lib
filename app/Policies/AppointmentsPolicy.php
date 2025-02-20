@@ -11,17 +11,18 @@ class AppointmentsPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAdmin(User $user, Appointments $appointments): bool
     {
-        return true;
+        return $user->role === 'admin';
     }
+
 
     /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, Appointments $appointments): bool
     {
-        return $user->id === $appointments->user_id || $user->role === 'student';
+        return $user->role === 'teacher' || $user->role === 'admin';
     }
 
     /**
@@ -29,7 +30,7 @@ class AppointmentsPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'teacher';
+        return $user->role === 'teacher' || $user->role === 'admin';
     }
 
     /**
@@ -37,7 +38,7 @@ class AppointmentsPolicy
      */
     public function update(User $user, Appointments $appointments): bool
     {
-        return $user->id === $appointments->user_id || $user->role === 'teacher';
+        return $user->role === 'teacher' || $user->role === 'admin';
     }
 
     /**
@@ -45,7 +46,7 @@ class AppointmentsPolicy
      */
     public function delete(User $user, Appointments $appointments): bool
     {
-        return $user->id === $appointments->user_id || $user->role === 'teacher';
+        return $user->role === 'teacher' || $user->role === 'admin';
     }
 
     /**
@@ -61,6 +62,6 @@ class AppointmentsPolicy
      */
     public function forceDelete(User $user, Appointments $appointments): bool
     {
-        return false;
+        return $user->role === 'teacher' || $user->role === 'admin';
     }
 }

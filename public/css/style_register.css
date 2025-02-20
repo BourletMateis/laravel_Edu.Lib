@@ -1,0 +1,71 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+body {
+    background-color: #d8f3dc;
+    font-family: 'Inter', sans-serif;
+}
+.card {
+    border: none;
+    border-radius: 12px;
+}
+.card-header {
+    background-color: #40916c;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #52b788;
+}
+.form-control:focus {
+    border-color: green;
+    box-shadow: 0 0 5px rgba(27, 67, 50, 0.5);
+}
+
+.btn-success {
+    background-color: #2d6a4f;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 60%;
+    display: block;
+
+}
+.btn-success:hover, .btn-password:hover {
+    background-color: #1b4332;
+}
+
+.btn-password{
+    background-color: #2d6a4f;
+    border: none;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 48%;
+    display: block;
+    margin: 0 ;
+}
+
+.link-password{
+    display: block;
+    margin-right: 50%;
+}
+
+label {
+    font-weight: bold;
+    color: #081c15;
+}
+.mb-0{
+    display: flex;
+    justify-content: center;
+}
+
+

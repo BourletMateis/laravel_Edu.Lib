@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\ProfesseurController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\Schedule;
+use App\Http\Controllers\ScheduleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -12,18 +14,38 @@ Route::get('/index', function () {
     return view('index');
 });
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
+
+
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/booking', [AppointmentsController::class, 'index']);
-Route::get('/calendar', function () {
-    return view('calendar');
+
+
+Route::delete('/schedule/{schedule}', [ScheduleController::class, 'destroy']);
+
+Route::get(uri : '/modal', action: function () {
+    return view(view: 'modal');
 });
 
 
-Route::get('/test', function () {
-    $schedules = Schedule::with('teacher')->get();
+// Must be logged routes
+Route::group(['middleware' => 'auth'], function () {
+    Route::delete('/appointments/{appointment}', [AppointmentsController::class, 'destroy']);
+    Route::get('calendar', [ScheduleController::class, 'index'])->name('schedules.index');
+    Route::post('schedules', [ScheduleController::class, 'store']);
+    Route::delete('schedules/{schedule}', [ScheduleController::class, 'destroy']);
+    Route::middleware(['auth'])->get('schedule_load', [ScheduleController::class, 'load_schedule'])->name('schedule_load');
+    Route::get('profil', action: function () {
+        return view(view: 'profil');
+    })->name('profil');
 
-    return view('test_schedules', compact('schedules'));
+
+    Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking');
+
 });
+

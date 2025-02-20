@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_teacher_id')->constrained('users')->cascadeOnDelete();
             $table->boolean('booked')->default(false);
-            $table->date('date');
+            $table->string('day');
             $table->time('time_start');
             $table->time('time_end');
-            $table->string('price');
 
         });
     }

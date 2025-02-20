@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'surname',
-        'is_teacher',
+        'role',
         'email',
         'password',
     ];
@@ -34,9 +34,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(Schedule::class);
     }
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 
+    public function isTeacher()
+    {
+        return $this->role === 'teacher';
+    }
 
-
+    public function isStudent()
+    {
+        return $this->role === 'student';
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
