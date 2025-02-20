@@ -3,10 +3,36 @@
 @section('content')
 <main>
     <section class="title">
-        <h1>Bienvenue sur EduLib</h1>
-        <p>Élevez votre potentiel avec notre expertise : des cours de qualité pour un avenir réussi.</p>
-        <button class="button">Prendre rendez vous !</button>
+        <div class="text-container">
+            <h1>Bienvenue sur EduLib</h1>
+            <p>Élevez votre potentiel avec notre expertise : des cours de qualité pour un avenir réussi.</p>
+            <button class="button">Prendre rendez vous !</button>
+        </div>
+        <img src="{{ asset('images/woman_teacher.png') }}" alt="Woman Image">
     </section>
+
+
+    <section class="features">
+        <h2>Votre allié pour une éducation d'excellence au quotidien</h2>
+        <div class="feature-container">
+            <div class="feature">
+                <img src="{{ asset('images/icon_ressources.png') }}" alt="Icône 1" class="icon">
+                <h3>Accédez à des cours interactifs</h3>
+                <p>Participez à des cours en ligne interactifs avec des experts dans divers domaines.</p>
+            </div>
+            <div class="feature">
+                <img src="{{ asset('images/icon_calendar.png') }}" alt="Icône 2" class="icon">
+                <h3>Apprenez à votre rythme</h3>
+                <p>Accédez à des ressources pédagogiques à tout moment et progressez selon votre propre calendrier.</p>
+            </div>
+            <div class="feature">
+                <img src="{{ asset('images/icon_community.png') }}" alt="Icône 3" class="icon">
+                <h3>Communauté d'apprentissage</h3>
+                <p>Rejoignez une communauté d'apprenants pour échanger, collaborer et grandir ensemble.</p>
+            </div>
+        </div>
+    </section>s
+
     <section class="info">
         <div class="info-item">
             <h2>Des cours passionnants</h2>
@@ -62,7 +88,13 @@
         <div class="cta-div">
             <h2>Et pourquoi pas vous ?</h2>
             <p>Commencez dès maintenant et découvrez tous les avantages de EduLib.</p>
-            <button class="cta-button">Inscrivez-vous</button>
+            @guest
+                <button class="cta-button">Inscrivez-vous</button>
+            @endguest
+
+            @auth
+                <button class="cta-button">Prendre rendez-vous</button>
+            @endauth
         </div>
 
 

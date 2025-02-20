@@ -53,24 +53,43 @@ nav .menu a {
     font-size: 16px;
 }
 
+
+/*                      STYLE TITLE                      */
+
 main .title {
     background-color: var(--primary-color);
-    color: var(--background-color); /* Texte en blanc */
-    padding: 8em 7em;
-    text-align: center;
+    color: var(--background-color);
+    text-align: left;
     font-family:"Inter";
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 7em 0 0 0;
+}
+
+.text-container {
+    flex: 1;
+    padding-left: 5em;
+}
+
+.title img {
+    max-width: 100%;
+    height: auto;
 }
 
 main .title h1 {
-    font-size: 3em;
+    font-size: 5em;
 }
 
 main .title p {
     font-size: 1.5em;
+    padding-bottom: 1em;
+    font-style: italic;
+
 }
 
 main .title .button {
-    background-color: var(--secondary-color); /* Couleur verte plus foncée */
+    background-color: var(--secondary-color);
     color: var(--background-color);
     padding: 10px 20px;
     border: none;
@@ -81,8 +100,54 @@ main .title .button {
 }
 
 main .title .button:hover {
-    background-color: var(--accent-color); /* Couleur verte encore plus foncée */
+    background-color: var(--accent-color);
 }
+
+
+/*                     STYLE FEATURES                      */
+
+.features {
+    text-align: center;
+    background-color: #f0f0f0;
+    margin: 10em 10em 6em 10em;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.features h2 {
+    margin-bottom: 20px;
+    padding-bottom: 2em;
+    color: var(--primary-color);
+}
+
+.feature-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.feature-container h3 {
+    font-size: 1.5em;
+    color: var(--accent-color);
+}
+
+.feature-container p {
+    font-size: 0.9rem;
+}
+
+.feature {
+    text-align: center;
+    max-width: 30%;
+}
+
+.icon {
+    width: 70px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+
+/*                              STYLE INFO                     */
 
 main .info {
     display: flex;
@@ -97,6 +162,7 @@ main .info .info-item {
     border-radius: 5px;
     width: 70%;
     margin: 2em;
+    margin-bottom: 6em;
 }
 
 main .info .info-item h2 {
@@ -154,7 +220,7 @@ main .info .info-item .learn-more:hover {
     background-color: var(--primary-color);
     color: white;
     padding: 2.5em;
-    margin: 4em 0 4em ;
+    margin: 4em 0 6em ;
 }
 
 .cta-div h2 {

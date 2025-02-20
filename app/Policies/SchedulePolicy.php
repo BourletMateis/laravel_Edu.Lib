@@ -21,7 +21,7 @@ class SchedulePolicy
      */
     public function view(User $user, Schedule $schedule): bool
     {
-        return false;
+        return $user->id === $schedule->user_id || $user->role === 'admin' || $user->role === 'teacher';
     }
 
     /**
