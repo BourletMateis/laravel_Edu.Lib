@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <main>
     <section class="title">
         <div class="text-container">
@@ -117,7 +118,7 @@
                 <div class="faq-item">
                     <div class="faq-question">
                         <span>Comment puis-je m'inscrire sur EduLib ?</span>
-                        <button class="faq-button">+</button>
+                        <button1 class="faq-button">+</button1>
                     </div>
                     <div class="faq-answer">Cliquez sur le bouton "S'inscrire" en haut à droite
                         de la page d'accueil. Remplissez le formulaire d'inscription avec vos
@@ -126,7 +127,7 @@
                 <div class="faq-item">
                     <div class="faq-question">
                         <span>Quels types de cours sont disponibles sur EduLib ?</span>
-                        <button class="faq-button">+</button>
+                        <button1 class="faq-button">+</button1>
                     </div>
                     <div class="faq-answer">EduLib propose une large gamme de cours,
                         y compris des cours de langues, d'informatique, de sciences, d'arts,
@@ -135,7 +136,7 @@
                 <div class="faq-item">
                     <div class="faq-question">
                         <span>Comment puis-je réserver un cours ?</span>
-                        <button class="faq-button">+</button>
+                        <button1 class="faq-button">+</button1>
                     </div>
                     <div class="faq-answer">Une fois inscrit, connectez-vous à votre compte,
                         naviguez vers la section des cours, choisissez le cours qui vous intéresse
@@ -144,7 +145,7 @@
                 <div class="faq-item">
                     <div class="faq-question">
                         <span>Puis-je accéder à mes cours depuis plusieurs appareils ?</span>
-                        <button class="faq-button">+</button>
+                        <button1 class="faq-button">+</button1>
                     </div>
                     <div class="faq-answer">Oui, vous pouvez accéder à vos cours depuis n'importe
                         quel appareil connecté à Internet. Notre plateforme est compatible avec
@@ -152,7 +153,7 @@
                 </div>
             </div>
         </div>
-        <button class="back-to-top">↑</button>
+        <button1 class="back-to-top">↑</button1>
     </section>
 
     <script>

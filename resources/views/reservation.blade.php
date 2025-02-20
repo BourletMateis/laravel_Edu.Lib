@@ -46,7 +46,6 @@
         </div>
       </div>
 
-
   <script>
     document.addEventListener("DOMContentLoaded", function(){
       flatpickr("#date-picker", {
