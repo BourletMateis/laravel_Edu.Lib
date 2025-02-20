@@ -108,7 +108,7 @@ class ScheduleController extends Controller
 
     }
     
-    public function load_schedule()
+        public function load_schedule()
     {
         Carbon::setLocale('fr');
         $schedules = schedule::where('user_teacher_id', auth()->id())->get();
