@@ -104,14 +104,43 @@ class ScheduleController extends Controller
         return $slots;
     }
 
+<<<<<<< HEAD
     /*
      * Load the teacher's schedule and return it in JSON format.
      *
      * @return \Illuminate\Http\JsonResponse JSON response containing the teacher's schedule events.
      */
     public function load_schedule()
+=======
+    public function ScheduleCalendar() {
+        Carbon::setLocale('fr');
+        $schedules = schedule::all();
+
+        $list_schedules = $schedules->map(function ($schedules) {
+            $start = Carbon::parse($schedules->time_start)->locale('fr'); //convertit les heures de debut
+            $end = Carbon::parse($schedules->time_end)->locale('fr'); //convertit les heures de fin
+
+            $hours = []; //les heures en tableaux
+
+
+            for ($current = $start; $current->lt($end); $current->addHour()) { //calcule end - start = n - 1
+                $hours[] = $current->isoFormat('HH:mm');
+            }
+
+            return [
+                'day' => $schedules->day,
+                'user_teacher_id' => $schedules->user_teacher_id,
+                'hours' => $hours,
+            ];
+        });
+
+        return response()->json($list_schedules); //met en format json
+
+    }
+    
+        public function load_schedule()
+>>>>>>> main
     {
-        $this->authorize('view', new Schedule());
         Carbon::setLocale('fr');
         $schedules = schedule::where('user_teacher_id', auth()->id())->get();
 
@@ -137,4 +166,5 @@ class ScheduleController extends Controller
 
         return response()->json($events);
     }
+
 }

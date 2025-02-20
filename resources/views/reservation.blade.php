@@ -16,7 +16,6 @@
     <div class="dates">
       <div class="date-item">
         <h3>Disponibilités :</h3>
-        <!-- Élément où les disponibilités seront affichées -->
         <div id="scheduleList"></div>
       </div>
     </div>
@@ -53,12 +52,10 @@
   </div>
 
   <script>
-    // Initialisation de Flatpickr sur le champ de date dans le popup
     document.addEventListener("DOMContentLoaded", function(){
       flatpickr("#date-picker", {
         enable: [
           function(date) {
-            // Seuls les mardis (getDay() retourne 2 pour mardi)
             return date.getDay() === 2;
           }
         ],
@@ -73,40 +70,47 @@
         .then(response => response.json())
         .then(data => {
           let scheduleContainer = document.getElementById('scheduleList');
-          scheduleContainer.innerHTML = ''; // Vide le contenu précédent
+          scheduleContainer.innerHTML = ''; 
 
-          let selectedProf = document.getElementById('prof-selector').value.split('|')[0]; // Récupère l'ID du professeur
+          let selectedProf = document.getElementById('prof-selector').value.split('|')[0];
 
-          // Filtrage des disponibilités pour le professeur sélectionné
-          data.forEach(schedule => {
-            if (schedule.user_teacher_id == selectedProf) {
-              let div = document.createElement('button');
-              div.innerHTML = `<strong>Jour :</strong> ${schedule.day} <br><hr>`;
-              scheduleContainer.appendChild(div);
+          let filteredSchedules = data.filter(schedule => schedule.user_teacher_id == selectedProf);
 
-              // Lors du clic sur le bouton du jour, affiche les heures disponibles
-              div.onclick = () => {
-                schedule.hours.forEach(hour => {
-                  let hourButton = document.createElement('button');
-                  hourButton.classList.add('hour-button');
-                  hourButton.setAttribute('data-day', schedule.day);
-                  hourButton.innerHTML = `<strong>Heure :</strong> ${hour} <br><hr>`;
-                  // Au clic sur l'heure, appelle la fonction selectHour
-                  hourButton.onclick = () => {
-                    selectHour(schedule.day, hour);
-                  };
-                  scheduleContainer.appendChild(hourButton);
-                });
-              };
+          let groupedSchedules = {};
+          filteredSchedules.forEach(schedule => {
+            if (!groupedSchedules[schedule.day]) {
+              groupedSchedules[schedule.day] = [];
             }
+            groupedSchedules[schedule.day] = [...new Set([...groupedSchedules[schedule.day], ...schedule.hours])]; // Évite les doublons
           });
 
-          if (scheduleContainer.innerHTML === '') {
+          Object.entries(groupedSchedules).forEach(([day, hours]) => {
+            let dayButton = document.createElement('button');
+            dayButton.innerHTML = `<strong>Jour :</strong> ${day} <br><hr>`;
+            dayButton.classList.add('day-button');
+            scheduleContainer.appendChild(dayButton);
+
+            dayButton.onclick = () => {
+              hours.forEach(hour => {
+                let hourButton = document.createElement('button');
+                hourButton.classList.add('hour-button');
+                hourButton.setAttribute('data-day', day);
+                hourButton.innerHTML = `<strong>Heure :</strong> ${hour} <br><hr>`;
+                hourButton.onclick = () => {
+                  selectHour(day, hour);
+                };
+                scheduleContainer.appendChild(hourButton);
+              });
+            };
+          });
+
+          if (Object.keys(groupedSchedules).length === 0) {
             scheduleContainer.innerHTML = "<p>Aucune disponibilité pour ce professeur.</p>";
           }
         })
         .catch(error => console.error("Erreur lors de la récupération :", error));
     }
+
 
     let selectedDay, selectedHour;
     function selectHour(day, hour) {
@@ -115,8 +119,7 @@
       document.getElementById('confirmation-popup').style.display = 'block';
       document.getElementById('confirmation-info').innerHTML = `
         Vous avez choisi <strong>${day}</strong> à <strong>${hour}</strong>.<br>
-        Choisissez une date (seulement mardi) et confirmez votre réservation.
-      `;
+        Choisissez une date (seulement mardi) et confirmez votre réservation.`;
     }
 
     function finalizeReservation() {
@@ -125,8 +128,9 @@
         alert("Veuillez sélectionner un mardi.");
         return;
       }
-      createAppointments(chosenDate);
+      
       alert(`Réservation confirmée pour ${selectedDay} à ${selectedHour} le ${chosenDate}`);
+      createAppointments(chosenDate, selectedHour);
 
       closePopup();
     }
@@ -135,33 +139,35 @@
       document.getElementById('confirmation-popup').style.display = 'none';
     }
 
-    function createAppointments(selectedDays){
-        let selectedTeacherId = document.getElementById('prof-selector').value.split('|')[0];
-        let selectedStudentId = 1; 
-
-        $.ajax({
-                url: '/addappointments' ,  
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    day: "10/04/2002",
-                    hour: "10:00:00",  // Heure par défaut
-                    teacher_id: selectedTeacherId,  // ID du professeur
-                     student_id: selectedStudentId,  // ID de l'élève
-                      title: "Réservation de rendez-vous",  // Titre par défaut
-                    description: "Rendez-vous avec le professeur",  // Description par défaut
-                },
-            
-                success: function(response) {
-                alert(response.message);
-                $('#confirmation-popup').modal('hide');
-                finalizeReservation.refetchEvents();     
-                },
-                error: function(response) {
-                alert('Erreur lors de la suppression. Veuillez réessayer.');
-                }
-            });
+  function createAppointments(chosenDate,hour) {
+    const selectedTeacherId = document.getElementById('prof-selector').value.split('|')[0];
+    let user = @json(Auth::id());
+    
+    $.ajax({
+    url: '/createappointment', 
+    method: 'POST', 
+    data: {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        date: chosenDate, 
+        start_time: hour + ":00",
+        end_time: (parseInt(hour) + 1) + ":00:00",
+        user_teacher_id: selectedTeacherId, 
+        user_student_id: user, 
+        title: "Réservation de rendez-vous", 
+        description: "Rendez-vous avec le professeur",
+        price: 11.88
+    },
+    success: function(response) {
+        alert("Réservation effectuée avec succès."); 
+        closePopup(); 
+        fetchSchedules(); 
+    },
+    error: function(xhr, status, error) {
+        console.error("Erreur:", error); 
+        alert('Erreur lors de la réservation.'); 
     }
+});
+}
   </script>
 </body>
 </html>
