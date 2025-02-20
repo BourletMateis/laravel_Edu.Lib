@@ -40,7 +40,7 @@ class ScheduleController extends Controller
      */
     public function store(ScheduleRequest $request) // Utilisation de ScheduleRequest
     {
-        // Vérifier si l'horaire existe déjà pour cet enseignant
+        // Check if the schedule already exists for this teacher
         $exists = Schedule::where('user_teacher_id', Auth::id())
             ->where('day', $request->day)
             ->where('time_start', $request->time_start)
@@ -52,7 +52,7 @@ class ScheduleController extends Controller
                 ->with('error', 'Cet horaire existe déjà.');
         }
 
-        // Enregistrement de l'horaire dans la base de données
+        // Saving the schedule to the database
         Schedule::create([
             'user_teacher_id' => Auth::id(),
             'booked' => false,
