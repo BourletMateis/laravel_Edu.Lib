@@ -495,8 +495,33 @@ button:not(:disabled),
 [type=button]:not(:disabled),
 [type=reset]:not(:disabled),
 [type=submit]:not(:disabled) {
-  cursor: pointer;
+    cursor: pointer;
+    padding: 1em;
+    border-radius: 5px;
+    border: 2px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 16px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin: 0.5em;
 }
+
+button:not(:disabled):hover,
+[type=button]:not(:disabled):hover,
+[type=reset]:not(:disabled):hover,
+[type=submit]:not(:disabled):hover {
+    background-color: var(--secondary-color); /* Couleur de survol */
+    border-color: var(--secondary-color);
+}
+
+button:not(:disabled):active,
+[type=button]:not(:disabled):active,
+[type=reset]:not(:disabled):active,
+[type=submit]:not(:disabled):active {
+    background-color: var(--accent-color); /* Couleur à l'état actif */
+    border-color: var(--accent-color);
+}
+
 
 ::-moz-focus-inner {
   padding: 0;

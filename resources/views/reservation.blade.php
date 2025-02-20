@@ -1,57 +1,50 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Réservation de Rendez-vous</title>
-  <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+@extends('layouts.app')
 
-</head>
+@section('content')
+
+    <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <body>
-  <div class="container">
-    <div class="dates">
-      <div class="date-item">
-        <h3>Disponibilités :</h3>
-        <!-- Élément où les disponibilités seront affichées -->
-        <div id="scheduleList"></div>
-      </div>
-    </div>
-
-    <div class="profile">
-      <img src="{{ asset('img/lama.jpg') }}" alt="Photo du professeur">
-      <h2>
-        <select id="prof-selector">
-          @foreach($professeurs as $professeur)
-          <option value="{{ $professeur->id }}|{{ $professeur->name }}|{{ $professeur->specialite }}">
-            {{ $professeur->name }} {{ $professeur->surname }} - {{ $professeur->specialite }}
-          </option>
-          @endforeach
-        </select>
-      </h2>
-    </div>
-
-    <!-- Popup de confirmation -->
-    <div id="confirmation-popup" class="popup" style="display: none;">
-      <div class="popup-content">
-        <h3>Confirmation de réservation</h3>
-        <p id="confirmation-info"></p>
-        <!-- Champ de sélection de date (seulement mardi) -->
-        <div>
-          <label for="date-picker">Choisir un mardi :</label>
-          <input type="text" id="date-picker" name="date-picker">
+    <div class="content">
+        <div class="container-dates">
+            <div class="dates">
+                <div class="date-item">
+                    <h3>Disponibilités :</h3>
+            <!-- Élément où les disponibilités seront affichées -->
+            <div id="scheduleList"></div>
+          </div>
         </div>
-        <div class="popup-actions">
-          <button onclick="closePopup()">Annuler</button>
-          <button onclick="finalizeReservation()">Confirmer</button>
+
+        <div class="profile">
+          <img src="{{ asset('img/lama.jpg') }}" alt="Photo du professeur">
+          <h2>
+            <select id="prof-selector">
+              @foreach($professeurs as $professeur)
+              <option value="{{ $professeur->id }}|{{ $professeur->name }}|{{ $professeur->specialite }}">
+                {{ $professeur->name }} {{ $professeur->surname }} - {{ $professeur->specialite }}
+              </option>
+              @endforeach
+            </select>
+          </h2>
+        </div>
+
+        <!-- Popup de confirmation -->
+        <div id="confirmation-popup" class="popup" style="display: none;">
+          <div class="popup-content">
+            <h3>Confirmation de réservation</h3>
+            <p id="confirmation-info"></p>
+            <!-- Champ de sélection de date (seulement mardi) -->
+            <div>
+              <label for="date-picker">Choisir un mardi :</label>
+              <input type="text" id="date-picker" name="date-picker">
+            </div>
+            <div class="popup-actions">
+              <button onclick="closePopup()">Annuler</button>
+              <button onclick="finalizeReservation()">Confirmer</button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-
   <script>
     document.addEventListener("DOMContentLoaded", function(){
       flatpickr("#date-picker", {
@@ -71,9 +64,9 @@
         .then(response => response.json())
         .then(data => {
           let scheduleContainer = document.getElementById('scheduleList');
-          scheduleContainer.innerHTML = ''; 
+          scheduleContainer.innerHTML = '';
 
-          let selectedProf = document.getElementById('prof-selector').value.split('|')[0]; 
+          let selectedProf = document.getElementById('prof-selector').value.split('|')[0];
 
           data.forEach(schedule => {
             if (schedule.user_teacher_id == selectedProf) {
@@ -119,7 +112,7 @@
         alert("Veuillez sélectionner un mardi.");
         return;
       }
-      
+
       alert(`Réservation confirmée pour ${selectedDay} à ${selectedHour} le ${chosenDate}`);
       createAppointments(chosenDate, selectedHour);
 
@@ -133,32 +126,33 @@
   function createAppointments(chosenDate,hour) {
     const selectedTeacherId = document.getElementById('prof-selector').value.split('|')[0];
     let user = @json(Auth::id());
-    
+
     $.ajax({
-    url: '/createappointment', 
-    method: 'POST', 
+    url: '/createappointment',
+    method: 'POST',
     data: {
         _token: $('meta[name="csrf-token"]').attr('content'),
-        date: chosenDate, 
+        date: chosenDate,
         start_time: hour + ":00",
         end_time: (parseInt(hour) + 1) + ":00:00",
-        user_teacher_id: selectedTeacherId, 
-        user_student_id: user, 
-        title: "Réservation de rendez-vous", 
+        user_teacher_id: selectedTeacherId,
+        user_student_id: user,
+        title: "Réservation de rendez-vous",
         description: "Rendez-vous avec le professeur",
         price: 11.88
     },
     success: function(response) {
-        alert("Réservation effectuée avec succès."); 
-        closePopup(); 
-        fetchSchedules(); 
+        alert("Réservation effectuée avec succès.");
+        closePopup();
+        fetchSchedules();
     },
     error: function(xhr, status, error) {
-        console.error("Erreur:", error); 
-        alert('Erreur lors de la réservation.'); 
+        console.error("Erreur:", error);
+        alert('Erreur lors de la réservation.');
     }
 });
 }
   </script>
+ </div>
 </body>
-</html>
+@endsection

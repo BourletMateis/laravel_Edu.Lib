@@ -1,22 +1,25 @@
 /* Style global de la page */
-body {
-    font-family: Arial, sans-serif;
+.content {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f5f5f5;
-    margin: 0;
+    flex-direction: column;
+    height: 75vh;
+    background-color: #ffffff;
+    font-family: Inter;
+    margin: 1em;
 }
 
+
 /* Conteneur principal */
-.container {
+.container-dates {
     display: flex;
     width: 80%;
-    background: white;
+    background-color: var(--light-bg-color);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 2em;
 }
 
 /* Section des dates avec défilement */
@@ -25,7 +28,6 @@ body {
     padding-right: 20px;
     max-height: 500px;  /* Limite la hauteur de la section */
     overflow-y: auto;   /* Active le défilement vertical */
-    padding-right: 10px;
 }
 
 
@@ -33,15 +35,22 @@ body {
 .date-item {
     cursor: pointer;
     padding: 10px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--primary-color);
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.date-item:hover {
-    background-color: #A5D6A7; /* Vert clair au survol */
-    color: #388E3C; /* Texte en vert foncé */
+.date-item h3 {
+    color: var(--primary-color);
 }
+
+.date-item p {
+    color: black;
+    font-style: normal;
+    font-weight: normal;
+}
+
+
 
 /* Plages horaires (hidden by default) */
 .hours {
@@ -63,7 +72,7 @@ body {
 .profile {
     width: 50%;
     text-align: center;
-    border-left: 1px solid #ddd;
+    border-left: 1px solid var(--primary-color);
     padding-left: 20px;
 }
 
@@ -78,23 +87,25 @@ body {
 /* Popup de confirmation */
 .popup {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     display: none;
-    justify-content: center;
-    align-items: center;
 }
+
+
 
 /* Contenu de la popup */
 .popup-content {
-    background-color: white;
+    background-color: var(--light-bg-color);
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     width: 300px;
+    transform: translate(200%, 65%);
 }
 
 /* Actions du popup (annuler/valider) */
@@ -102,7 +113,7 @@ body {
     margin: 10px;
     padding: 10px;
     font-size: 16px;
-    background-color: #f44336;
+    background-color: var(--secondary-color);
     color: white;
     border: none;
     border-radius: 5px;
@@ -110,23 +121,7 @@ body {
 }
 
 .popup-actions button:hover {
-    background-color: #d32f2f;
-}
-
-/* Options de durée dans le popup */
-.duration-options button {
-    margin: 5px;
-    padding: 10px;
-    font-size: 16px;
-    background-color: #388E3C;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.duration-options button:hover {
-    background-color: #2c6d32;
+    background-color: var(--accent-color);
 }
 
 /* Animation pour l'ouverture du popup */
@@ -136,7 +131,23 @@ body {
 
 #prof-selector {
     font-size: 18px;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 10px;
+    border: 2px solid var(--primary-color);
+    background-color: transparent;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
 }
+
+#prof-selector:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 10px var(--accent-color);
+    outline: none;
+}
+
+#prof-selector:hover {
+    background-color: #d4edda;
+    border-color: #28a745;
+}
+
+

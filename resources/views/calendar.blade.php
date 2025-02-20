@@ -52,7 +52,7 @@
                                 <option value="{{ $item }}">{{ __('pages.days.'.$item) }}</option>
                             @endforeach
                         </select>
- 
+
                     </div>
 
                     <div class="form-group mt-3">
