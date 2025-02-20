@@ -144,8 +144,8 @@
 
       alert(`Réservation confirmée pour ${selectedDay} à ${selectedHour} le ${chosenDate}`);
       createAppointments(chosenDate, selectedHour);
-
       closePopup();
+
     }
 
     function closePopup() {
@@ -174,12 +174,28 @@
         alert("Réservation effectuée avec succès.");
         closePopup();
         fetchSchedules();
+
+        // Après la réservation réussie, on envoie l'email
+        sendEmailConfirmation();
     },
     error: function(xhr, status, error) {
         console.error("Erreur:", error);
         alert('Erreur lors de la réservation.');
     }
 });
+
+  function sendEmailConfirmation() {
+      $.ajax({
+          url: '/sendmail',
+          method: 'GET',
+          success: function(response) {
+              alert("Email de confirmation envoyé !");
+          },
+          error: function(xhr, status, error) {
+              console.error("Erreur d'envoi d'email:", error);
+          }
+      });
+  }
 }
   </script>
 </body>

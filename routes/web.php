@@ -22,7 +22,7 @@ Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking'
 
 Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
 
-Route::get('/sendmail', [EmailController::class, 'SendCheckEmail']);
+Route::get('/sendmail', [EmailController::class, 'SendCheckEmail'])->middleware('auth');
 
 Auth::routes();
 
