@@ -223,9 +223,9 @@
               console.error("Erreur d'envoi d'email:", error);
           }
       });
-  }
+    }
 }
-    </script>
+  </script>
  </div>
 </body>
 @endsection
