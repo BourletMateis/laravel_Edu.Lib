@@ -12,13 +12,10 @@ Route::get('/', function () {
 
 
 Auth::routes();
-Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
-
-
-Route::post('createappointment', [AppointmentsController::class, 'createAppointments']);
-
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
+    Route::post('createappointment', [AppointmentsController::class, 'createAppointments']);
     Route::get('load_schedule', [ScheduleController::class, 'load_schedule'])->name('load_schedule');
     Route::delete('/schedule/{schedule}', [ScheduleController::class, 'destroy']);
     Route::get('list', [ScheduleController::class, 'ScheduleCalendar'])->name('schedule.list');
