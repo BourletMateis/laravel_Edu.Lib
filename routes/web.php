@@ -23,6 +23,7 @@ Route::get('/calendar', function () {
     return view('calendar');
 });
 
+Route::delete('appointments', [AppointmentsController::class, 'destroy']);
 
 Auth::routes();
 
@@ -41,5 +42,6 @@ Route::middleware(['auth'])->post('schedules', [ScheduleController::class, 'stor
 Route::middleware(['auth'])->delete('schedules/{schedule}', [ScheduleController::class, 'destroy']);
 
 Route::get('list', [ScheduleController::class, 'ScheduleCalendar']);
+Route::post('/addappointments', [AppointmentsController::class, 'createAppointments']);
 
 Route::get('/schedule-view', [ScheduleController::class, 'showSchedules']);
