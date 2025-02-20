@@ -186,7 +186,7 @@
 
   function sendEmailConfirmation() {
       $.ajax({
-          url: '/sendmail',
+          url: '{{ route('sendmail') }}',
           method: 'GET',
           success: function(response) {
               alert("Email de confirmation envoyé !");
