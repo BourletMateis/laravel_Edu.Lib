@@ -83,15 +83,12 @@
               let div = document.createElement('button');
               div.innerHTML = `<strong>Jour :</strong> ${schedule.day} <br><hr>`;
               scheduleContainer.appendChild(div);
-
-              // Lors du clic sur le bouton du jour, affiche les heures disponibles
               div.onclick = () => {
                 schedule.hours.forEach(hour => {
                   let hourButton = document.createElement('button');
                   hourButton.classList.add('hour-button');
                   hourButton.setAttribute('data-day', schedule.day);
                   hourButton.innerHTML = `<strong>Heure :</strong> ${hour} <br><hr>`;
-                  // Au clic sur l'heure, appelle la fonction selectHour
                   hourButton.onclick = () => {
                     selectHour(schedule.day, hour);
                   };
@@ -135,33 +132,37 @@
       document.getElementById('confirmation-popup').style.display = 'none';
     }
 
-    function createAppointments(selectedDays){
-        let selectedTeacherId = document.getElementById('prof-selector').value.split('|')[0];
-        let selectedStudentId = 1; 
-
-        $.ajax({
-                url: '/addappointments' ,  
-                method: 'POST',
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                data: {
-                    day: "10/04/2002",
-                    hour: "10:00:00",  // Heure par défaut
-                    teacher_id: selectedTeacherId,  // ID du professeur
-                     student_id: selectedStudentId,  // ID de l'élève
-                      title: "Réservation de rendez-vous",  // Titre par défaut
-                    description: "Rendez-vous avec le professeur",  // Description par défaut
-                },
-            
-                success: function(response) {
-                alert(response.message);
-                $('#confirmation-popup').modal('hide');
-                finalizeReservation.refetchEvents();     
-                },
-                error: function(response) {
-                alert('Erreur lors de la suppression. Veuillez réessayer.');
-                }
-            });
+  function createAppointments(chosenDate) {
+    const selectedTeacherId = document.getElementById('prof-selector').value.split('|')[0];
+    
+    $.ajax({
+    url: '/createappointment', 
+    method: 'POST', 
+    data: {
+        _token: $('meta[name="csrf-token"]').attr('content'),
+        date: "2027-10-12", 
+        start_time: "10:00:00", 
+        end_time: "20:00:00", 
+        user_teacher_id: 3, 
+        user_student_id: 1, 
+        title: "Réservation de rendez-vous", 
+        description: "Rendez-vous avec le professeur",
+        price: 60.11 
+    },
+    success: function(response) {
+        alert(response.message); 
+        closePopup(); 
+        fetchSchedules(); 
+    },
+    error: function(xhr, status, error) {
+        console.error("Erreur:", error); 
+        alert('Erreur lors de la réservation.'); 
     }
+});
+
+
+}
+
   </script>
 </body>
 </html>

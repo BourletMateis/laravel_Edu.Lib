@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Http\Requests;
-
+namespace App\Http\Requests;  // Changez le namespace ici
 use Illuminate\Foundation\Http\FormRequest;
 
 class AppointmentRequest extends FormRequest
 {
-    /**
-     * Détermine si l'utilisateur est autorisé à faire cette requête.
-     */
     public function authorize(): bool
     {
-        return true; // Mets une logique d'autorisation si nécessaire
+        return true;
     }
 
-    /**
-     * Définit les règles de validation.
-     */
     public function rules(): array
     {
         return [
-            'id' => 'required|integer|exists:appointments,id',
+            'date' => 'required|date|after:today',
+            'start_time' => 'required|date_format:H:i:s',
+            'end_time' => 'required|date_format:H:i:s',
+            'user_teacher_id' => 'required|exists:users,id',
+            'user_student_id' => 'required|exists:users,id',
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+            'price' => 'required|decimal:2,2',
         ];
     }
 }
