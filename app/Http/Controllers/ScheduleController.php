@@ -10,6 +10,13 @@ use App\Models\User;
 use App\Http\Requests\ScheduleRequest;
 class ScheduleController extends Controller
 {
+    /*
+     * Display the schedule management page.
+     *
+     * @param Request $request The incoming request containing optional start and end times.
+     * @return \Illuminate\View\View The calendar view with schedules and available slots.
+     */
+
     public function index(Request $request) {
         $this->authorize('view', new Schedule());
 
@@ -25,9 +32,15 @@ class ScheduleController extends Controller
 
     }
 
+    /*
+     * Store a new schedule slot for a teacher.
+     *
+     * @param ScheduleRequest $request The validated request data.
+     * @return \Illuminate\Http\RedirectResponse Redirects to the schedules index with a success or error message.
+     */
     public function store(ScheduleRequest $request) // Utilisation de ScheduleRequest
     {
-        // Vérifier si l'horaire existe déjà pour cet enseignant
+        // Check if the schedule already exists for this teacher
         $exists = Schedule::where('user_teacher_id', Auth::id())
             ->where('day', $request->day)
             ->where('time_start', $request->time_start)
@@ -39,7 +52,7 @@ class ScheduleController extends Controller
                 ->with('error', 'Cet horaire existe déjà.');
         }
 
-        // Enregistrement de l'horaire dans la base de données
+        // Saving the schedule to the database
         Schedule::create([
             'user_teacher_id' => Auth::id(),
             'booked' => false,
@@ -53,7 +66,12 @@ class ScheduleController extends Controller
     }
 
 
-
+    /*
+     * Delete a schedule slot.
+     *
+     * @param Schedule $schedule The schedule instance to be deleted.
+     * @return \Illuminate\Http\JsonResponse Returns a JSON response with a success or error message.
+     */
     public function destroy(Schedule $schedule) {
         $this->authorize('delete', $schedule);
         // Supprimer l'horaire si c'est le professeur connecté qui en est l'auteur
@@ -65,8 +83,12 @@ class ScheduleController extends Controller
             }
 
 
-    /**
-     * Génère des créneaux horaires entre une heure de début et une heure de fin.
+    /*
+     * Generate time slots between a given start and end time.
+     *
+     * @param string $startTime The start time in "H:i" format.
+     * @param string $endTime The end time in "H:i" format.
+     * @return array An array of available time slots.
      */
     private function generateTimeSlots($startTime, $endTime) {
         $this->authorize('view', new Schedule());
@@ -82,6 +104,11 @@ class ScheduleController extends Controller
         return $slots;
     }
 
+    /*
+     * Load the teacher's schedule and return it in JSON format.
+     *
+     * @return \Illuminate\Http\JsonResponse JSON response containing the teacher's schedule events.
+     */
     public function ScheduleCalendar() {
         Carbon::setLocale('fr');
         $schedules = schedule::all();
@@ -109,6 +136,7 @@ class ScheduleController extends Controller
     }
 
         public function load_schedule()
+
     {
         Carbon::setLocale('fr');
         $schedules = schedule::where('user_teacher_id', auth()->id())->get();

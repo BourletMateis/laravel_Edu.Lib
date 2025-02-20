@@ -1,8 +1,20 @@
 @extends('layouts.app')
 
+{{--
+    @section content
+    This section represents the homepage of EduLib.
+    It contains:
+    - A welcome message
+    - An introduction to the services
+    - Student testimonials
+    - Links to learn more
+--}}
+
+
 @section('content')
 
 <main>
+        {{-- welcome section --}}
     <section class="title">
         <div class="text-container">
             <h1>Bienvenue sur EduLib</h1>
@@ -20,8 +32,7 @@
         </div>
         <img src="{{ asset('images/woman_teacher.png') }}" alt="Woman Image">
     </section>
-
-
+    {{-- information section on courses and testimonials --}}
     <section class="features">
         <h2>Votre allié pour une éducation d'excellence au quotidien</h2>
         <div class="feature-container">
@@ -51,6 +62,7 @@
                 la grammaire, le vocabulaire et la culture française.</p>
             <a href="#" class="learn-more">En savoir plus</a>
         </div>
+            {{-- student testimonials --}}
         <div class="info-item" style="text-align: center;">
             <h2>Témoignage</h2>
             <p>Découvrez ce que nos élèves disent de nous et comment nos cours les ont aidés à atteindre leurs objectifs.</p>
@@ -66,6 +78,7 @@
                             une confirmation instantanée. C'est vraiment pratique et efficace."</p>
                     </center>
                 </div>
+                  {{-- kevin's testimony --}}
                 <div class = "card-testimony">
                     <img src="{{ asset('images/profil_image.png') }}" alt="Profil Image">
                     <h5><strong>Kevin</strong></h5>
@@ -77,6 +90,7 @@
                             amélioré mon organisation et mes résultats."</p>
                     </center>
                 </div>
+                 {{-- casper's testimony --}}
                 <div class = "card-testimony">
                     <img src="{{ asset('images/profil_image.png') }}" alt="Profil Image">
                     <h5><strong>Casper</strong></h5>
@@ -88,11 +102,13 @@
                             en cas de besoin. Je recommande vivement EduLib à tous mes amis."</p>
                     </center>
 
-                </div>
+            </div>
 
             </div>
             <a href="#" class="learn-more">En savoir plus</a>
         </div>
+            {{-- other subject presented on the site --}}
+
 
 
         <div class="cta-div">
