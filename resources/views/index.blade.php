@@ -34,7 +34,7 @@
     </section>s
 
     <section class="info">
-        <div class="info-item">
+        <div class="info-item" style="width: 90%;">
             <h2>Des cours passionnants</h2>
             <p>Améliorez vos compétences en <strong>français, mathématiques, physique-chimie et plein d'autres</strong>
                 avec nos cours interactifs et personnalisés. Nos enseignants expérimentés vous guideront à travers
