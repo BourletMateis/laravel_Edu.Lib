@@ -107,5 +107,33 @@ class ScheduleController extends Controller
         return response()->json($list_schedules); //met en format json
 
     }
+    
+    public function load_schedule()
+    {
+        Carbon::setLocale('fr');
+        $schedules = schedule::where('user_teacher_id', auth()->id())->get();
+
+        $events = $schedules->map(function ($schedules) {
+            // Formatage des dates
+            $start = Carbon::parse($schedules->day . ' ' . $schedules->time_start)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
+            $end = Carbon::parse($schedules->day . ' ' . $schedules->time_end)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
+            $end_time = Carbon::parse($schedules->time_end)->locale('fr')->isoFormat('HH:mm');
+
+
+
+            $user = User::find($schedules->user_teacher_id);
+
+            return [
+                'id' => $schedules->id,
+                'start' => $start,
+                'end' => $end,
+                "className"=> "event-schedule-load",
+
+
+            ];
+        });
+
+        return response()->json($events);
+    }
 
 }
