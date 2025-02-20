@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="{{ asset('css/reservation.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <body>
-    <div class="content">
+<div class="content">
         <div class="container-dates">
             <div class="dates">
                 <div class="date-item">
@@ -61,40 +61,64 @@
     });
 
     function fetchSchedules() {
-      fetch('/list')
-        .then(response => response.json())
-        .then(data => {
-          let scheduleContainer = document.getElementById('scheduleList');
-          scheduleContainer.innerHTML = '';
+  fetch("{{ route('schedule.list') }}")
+    .then(response => response.json())
+    .then(data => {
+      let scheduleContainer = document.getElementById('scheduleList');
+      scheduleContainer.innerHTML = '';
 
-          let selectedProf = document.getElementById('prof-selector').value.split('|')[0];
+      let selectedProf = document.getElementById('prof-selector').value.split('|')[0];
 
-          data.forEach(schedule => {
-            if (schedule.user_teacher_id == selectedProf) {
-              let div = document.createElement('button');
-              div.innerHTML = `<strong>Jour :</strong> ${schedule.day} <br><hr>`;
-              scheduleContainer.appendChild(div);
-              div.onclick = () => {
-                schedule.hours.forEach(hour => {
-                  let hourButton = document.createElement('button');
-                  hourButton.classList.add('hour-button');
-                  hourButton.setAttribute('data-day', schedule.day);
-                  hourButton.innerHTML = `<strong>Heure :</strong> ${hour} <br><hr>`;
-                  hourButton.onclick = () => {
-                    selectHour(schedule.day, hour);
-                  };
-                  scheduleContainer.appendChild(hourButton);
-                });
-              };
-            }
-          });
+      // 1. Filtrer les disponibilités du professeur sélectionné
+      let filteredSchedules = data.filter(schedule => schedule.user_teacher_id == selectedProf);
 
-          if (scheduleContainer.innerHTML === '') {
-            scheduleContainer.innerHTML = "<p>Aucune disponibilité pour ce professeur.</p>";
-          }
-        })
-        .catch(error => console.error("Erreur lors de la récupération :", error));
-    }
+      // 2. Regrouper par jour en fusionnant les horaires
+      let groupedSchedules = {};
+      filteredSchedules.forEach(schedule => {
+        if (!groupedSchedules[schedule.day]) {
+          groupedSchedules[schedule.day] = [];
+        }
+        groupedSchedules[schedule.day] = [...new Set([...groupedSchedules[schedule.day], ...schedule.hours])]; // Évite les doublons
+      });
+
+      // 3. Affichage des jours et horaires
+      Object.entries(groupedSchedules).forEach(([day, hours]) => {
+        let dayButton = document.createElement('button');
+        dayButton.innerHTML = `<strong>Jour :</strong> ${day} <br><hr>`;
+        dayButton.classList.add('day-button');
+        scheduleContainer.appendChild(dayButton);
+
+        // Créer un conteneur pour les horaires (caché au début)
+        let hourContainer = document.createElement('div');
+        hourContainer.classList.add('hour-container');
+        hourContainer.style.display = 'none';
+        scheduleContainer.appendChild(hourContainer);
+
+        hours.forEach(hour => {
+          let hourButton = document.createElement('button');
+          hourButton.classList.add('hour-button');
+          hourButton.setAttribute('data-day', day);
+          hourButton.innerHTML = `<strong>Heure :</strong> ${hour} <br><hr>`;
+          hourButton.onclick = () => {
+            selectHour(day, hour);
+          };
+          hourContainer.appendChild(hourButton);
+        });
+
+        // Ajouter un événement de clic pour afficher/masquer les horaires
+        dayButton.onclick = () => {
+          hourContainer.style.display = hourContainer.style.display === 'none' ? 'block' : 'none';
+        };
+      });
+
+      if (Object.keys(groupedSchedules).length === 0) {
+        scheduleContainer.innerHTML = "<p>Aucune disponibilité pour ce professeur.</p>";
+      }
+    })
+    .catch(error => console.error("Erreur lors de la récupération :", error));
+}
+
+
 
     let selectedDay, selectedHour;
     function selectHour(day, hour) {
@@ -103,8 +127,7 @@
       document.getElementById('confirmation-popup').style.display = 'block';
       document.getElementById('confirmation-info').innerHTML = `
         Vous avez choisi <strong>${day}</strong> à <strong>${hour}</strong>.<br>
-        Choisissez une date (seulement mardi) et confirmez votre réservation.
-      `;
+        Choisissez une date (seulement mardi) et confirmez votre réservation.`;
     }
 
     function finalizeReservation() {

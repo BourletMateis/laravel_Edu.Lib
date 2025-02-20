@@ -107,8 +107,8 @@ class ScheduleController extends Controller
         return response()->json($list_schedules); //met en format json
 
     }
-    
-    public function load_schedule()
+
+        public function load_schedule()
     {
         Carbon::setLocale('fr');
         $schedules = schedule::where('user_teacher_id', auth()->id())->get();
