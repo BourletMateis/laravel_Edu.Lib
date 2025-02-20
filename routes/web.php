@@ -42,3 +42,4 @@ Route::middleware(['auth'])->delete('schedules/{schedule}', [ScheduleController:
 
 Route::get('list', [ScheduleController::class, 'ScheduleCalendar']);
 
+Route::get('/schedule-view', [ScheduleController::class, 'showSchedules']);

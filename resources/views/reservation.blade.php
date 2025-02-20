@@ -16,7 +16,7 @@
             <h3>
                 <select id="day">
                     @foreach($schedules as $day)
-                        <option value="{{$days->day}}"></option>
+                        <option value="{{ $day['day'] }}">{{ $day['day'] }}</option>
                     @endforeach
                 </select>
             </h3>
