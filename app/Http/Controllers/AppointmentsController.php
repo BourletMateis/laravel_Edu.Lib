@@ -6,6 +6,7 @@ use App\Http\Requests\AppointmentRequest;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Symfony\Component\Mime\Part\Multipart\AlternativePart;
 use Validator;
 
 class AppointmentsController extends Controller
@@ -53,21 +54,35 @@ class AppointmentsController extends Controller
        return response()->json(['message' => 'Rendez-vous non trouvé'], 404);
    }
 
-       public function createAppointments(AppointmentRequest $request)
-       {
-           $appointment = Appointments::create([
-               'start_time' => $request->input('start_time'),
-               'user_teacher_id' => $request->input('user_teacher_id'),
-               'user_student_id' => $request->input('user_student_id'),
-               'title' => $request->input('title'),
-               'description' => $request->input('description'),
-               'price' => $request->input('price'),
-               'end_time' => $request->input('end_time'),
-               'date' => $request->input('date'),
-           ]);
-
-           return response()->json($appointment, 201);
+   public function createAppointments(AppointmentRequest $request)
+   {
+       // Vérifier s'il existe déjà un rendez-vous avec les mêmes informations
+       $existingAppointment = Appointments::where('start_time', $request->input('start_time'))
+           ->where('end_time', $request->input('end_time'))
+           ->where('user_teacher_id', $request->input('user_teacher_id'))
+           ->where('user_student_id', $request->input('user_student_id'))
+           ->where('date', $request->input('date'))
+           ->first();
+   
+       if ($existingAppointment) {
+        
+           return response()->json(['error' => 'Un rendez-vous avec ces détails existe déjà.'], 400);
        }
+   
+       $appointment = Appointments::create([
+           'start_time' => $request->input('start_time'),
+           'user_teacher_id' => $request->input('user_teacher_id'),
+           'user_student_id' => $request->input('user_student_id'),
+           'title' => $request->input('title'),
+           'description' => $request->input('description'),
+           'price' => $request->input('price'),
+           'end_time' => $request->input('end_time'),
+           'date' => $request->input('date'),
+       ]);
+   
+       return response()->json($appointment, 201);
+   }
+   
    }
 
 

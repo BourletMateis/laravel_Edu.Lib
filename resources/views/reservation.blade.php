@@ -80,7 +80,7 @@
                         if (!groupedSchedules[schedule.day]) {
                             groupedSchedules[schedule.day] = [];
                         }
-                        groupedSchedules[schedule.day] = [...new Set([...groupedSchedules[schedule.day], ...schedule.hours])]; // Évite les doublons
+                        groupedSchedules[schedule.day] = [...new Set([...groupedSchedules[schedule.day], ...schedule.hours])]; 
                     });
         const daysTranslations = {
             monday: 'Lundi',
@@ -168,7 +168,6 @@
               alert("Erreur: Veuillez choisir une date.");
               return;
             }
-
       alert(`Réservation confirmée le ${chosenDate} à ${selectedHour} `);
       createAppointments(chosenDate, selectedHour);
 
@@ -206,7 +205,7 @@
                 },
                 error: function(xhr, status, error) {
                     console.error("Erreur:", error);
-                    alert('Erreur lors de la réservation.');
+                    alert("Un rendez-vous est déjà présent");
                 }
             });
             function sendEmailConfirmation() {
