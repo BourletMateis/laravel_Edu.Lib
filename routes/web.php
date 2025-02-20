@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ProfesseurController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -10,6 +11,7 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/sendmail', [EmailController::class, 'SendCheckEmail'])->middleware('auth')->name('sendmail');
 
 Auth::routes();
 
