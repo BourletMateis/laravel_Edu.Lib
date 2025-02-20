@@ -1,3 +1,9 @@
+{{--
+    @file index.blade.php
+    @brief Template principal pour l'affichage de la page d'accueil de l'application Laravel.
+    @details Ce fichier contient la structure de base de la page avec l'intégration des styles et scripts.
+--}}
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
