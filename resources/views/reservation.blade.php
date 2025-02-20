@@ -32,8 +32,8 @@
             <h3>Confirmation de réservation</h3>
             <p id="confirmation-info"></p>
             <div>
-              <label for="date-picker">Choisir un mardi :</label>
-              <input type="text" id="date-picker" name="date-picker">
+            <label for="date-picker" id="date-label">Choisir un jour :</label>
+            <input type="text" id="date-picker" name="date-picker">
             </div>
             <div class="popup-actions">
               <button onclick="closePopup()">Annuler</button>
@@ -159,19 +159,20 @@
             selectedDay = day;
             selectedHour = hour;
             document.getElementById('confirmation-popup').style.display = 'block';
+            document.getElementById('date-label').innerText = "Choisir un " + daysTranslations[day] + " :";
             document.getElementById('confirmation-info').innerHTML = `
-                Vous avez choisi <strong>${day}</strong> à <strong>${hour}</strong>.<br>
-                Choisissez une date (seulement mardi) et confirmez votre réservation.`;
+            Vous avez choisi <strong>${daysTranslations[day]}</strong> à <strong>${hour}</strong>.
+            Choisissez une date et confirmez votre réservation.`;
         }
 
         function finalizeReservation() {
             let chosenDate = document.getElementById('date-picker').value;
             if (!chosenDate) {
-                alert("Veuillez sélectionner un mardi.");
-                return;
+              alert("Erreur: Veuillez choisir une date.");
+              return;
             }
 
-      alert(`Réservation confirmée pour ${selectedDay} à ${selectedHour} le ${chosenDate}`);
+      alert(`Réservation confirmée le ${chosenDate} à ${selectedHour} `);
       createAppointments(chosenDate, selectedHour);
 
       closePopup();
