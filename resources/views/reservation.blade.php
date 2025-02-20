@@ -60,13 +60,10 @@
                 dateFormat: "Y-m-d",
             });
         }
-
-
         document.addEventListener("DOMContentLoaded", function(){
             fetchSchedules();
             document.getElementById('prof-selector').addEventListener("change", fetchSchedules);
         });
-
         function fetchSchedules() {
             fetch("{{ route('schedule.list') }}")
                 .then(response => response.json())
