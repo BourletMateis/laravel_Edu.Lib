@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ProfesseurController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,7 @@ Route::get('/booking', [AppointmentsController::class, 'index'])->name('booking'
 
 Route::get('/reservation', [ProfesseurController::class, 'index'])->name('reservation');
 
-
+Route::get('/sendmail', [EmailController::class, 'SendCheckEmail']);
 
 Auth::routes();
 
