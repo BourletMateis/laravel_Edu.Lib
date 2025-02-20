@@ -23,7 +23,7 @@ class AppointmentsPolicy
      */
     public function view(User $user, Appointments $appointments): bool
     {
-        return $user->role === 'teacher' || $user->role === 'admin';
+        return $user->role === 'teacher' || $user->role === 'admin' || $user->role === 'student';
     }
 
     /**
