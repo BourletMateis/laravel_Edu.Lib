@@ -32,21 +32,4 @@ function finalizeReservation() {
     closePopup();
 }
 
-// Fonction pour afficher les heures disponibles dans le menu déroulant
-function toggleHours(element) {
-    let hours = element.querySelector('.hours');
-    let allHours = document.querySelectorAll('.hours');
-    allHours.forEach(h => { if (h !== hours) h.style.display = 'none'; });
-    hours.style.display = (hours.style.display === 'block') ? 'none' : 'block';
-}
-
-// Fonction pour ouvrir la popup de réservation en cliquant sur une heure
-document.querySelectorAll('.hours div').forEach(hour => {
-    hour.addEventListener('click', function() {
-        const time = this.innerText;
-        const date = this.closest('.date-item').innerText.split('\n')[0]; // Récupère la date du jour
-        showConfirmationPopup(time, date);
-    });
-});
-
 

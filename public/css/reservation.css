@@ -43,21 +43,6 @@ body {
     color: #388E3C; /* Texte en vert foncé */
 }
 
-/* Plages horaires (hidden by default) */
-.hours {
-    display: none;
-    padding-left: 15px;
-}
-
-/* Chaque heure dans le menu déroulant */
-.hours div {
-    padding: 5px 0;
-    cursor: pointer;
-}
-
-.hours div:hover {
-    background-color: #f0f0f0;
-}
 
 /* Section du profil du professeur */
 .profile {

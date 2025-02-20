@@ -15,14 +15,14 @@ class ScheduleController extends Controller
 
         $schedules = Schedule::where('user_teacher_id', Auth::id())->get();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-        
-        $availableSlots = $this->generateTimeSlots($startTime, $endTime);  
-        
+
+        $availableSlots = $this->generateTimeSlots($startTime, $endTime);
+
         return view('calendar', compact('schedules', 'availableSlots','days'));
 
     }
 
-    
+
     public function store(Request $request) {
         // Validation des données du formulaire
         $request->validate([
@@ -68,7 +68,7 @@ class ScheduleController extends Controller
 
         // Redirection avec un message de succès
         return redirect()->route('schedules.index')->with('success', 'Horaire ajouté');
-    } 
+    }
 
     public function destroy(Schedule $schedule) {
         // Supprimer l'horaire si c'est le professeur connecté qui en est l'auteur
@@ -94,4 +94,32 @@ class ScheduleController extends Controller
 
         return $slots;
     }
+
+    public function ScheduleCalendar() {
+        Carbon::setLocale('fr');
+        $schedules = schedule::all();
+
+        $list_schedules = $schedules->map(function ($schedules) {
+            $start = Carbon::parse($schedules->time_start)->locale('fr'); //convertit les heures de debut
+            $end = Carbon::parse($schedules->time_end)->locale('fr'); //convertit les heures de fin
+
+            $hours = []; //les heures en tableaux
+
+
+            for ($current = $start; $current->lt($end); $current->addHour()) { //calcule end - start = n - 1
+                $hours[] = $current->isoFormat('HH:mm');
+            }
+
+            return [
+                'day' => $schedules->day,
+                'user_teacher_id' => $schedules->user_teacher_id,
+                'hours' => $hours,
+            ];
+        });
+
+        return response()->json($list_schedules); //met en format json
+
+    }
+
+
 }

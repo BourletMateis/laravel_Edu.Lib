@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
-use Illuminate\Http\Request;
-use App\Models\User;  // Utilisation du modèle User au lieu de Professeur
+use App\Http\Controllers\Controller;
+use App\Models\User;
 
-class ProfesseurController extends Controller
+// Utilisation du modèle User au lieu de Professeur
+
+class teacherController extends Controller
 {
     public function index()
     {
