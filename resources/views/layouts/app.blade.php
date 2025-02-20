@@ -37,7 +37,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/index') }}">EduLib</a>
+                <a class="navbar-brand" href="{{ url('/') }}">EduLib</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -71,10 +71,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
-                                    <a class="dropdown-item" href="{{ url('/home') }}">Dashboard</a>
-
                                     @can('view', new \App\Models\Schedule())
-                                    <a class="dropdown-item" href="{{ url('/calendar') }}">Calendar</a>
+                                    <a class="dropdown-item" href="{{ url('/calendar') }}">Dashboard</a>
                                     @endcan
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

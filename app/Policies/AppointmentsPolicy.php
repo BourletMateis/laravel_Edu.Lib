@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Appointments;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Container\Attributes\Auth;
 
 class AppointmentsPolicy
 {
@@ -13,7 +14,7 @@ class AppointmentsPolicy
      */
     public function viewAdmin(User $user, Appointments $appointments): bool
     {
-        return $user->role === 'admin';
+        return $user->role === 'admin' || $user->role === 'teacher' || $user->id === auth()->id();
     }
 
 
