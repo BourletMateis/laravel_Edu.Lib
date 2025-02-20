@@ -31,7 +31,7 @@
                 <p>Rejoignez une communauté d'apprenants pour échanger, collaborer et grandir ensemble.</p>
             </div>
         </div>
-    </section>s
+    </section>
 
     <section class="info">
         <div class="info-item" style="width: 90%;">
