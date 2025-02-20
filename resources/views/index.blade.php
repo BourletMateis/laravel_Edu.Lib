@@ -6,7 +6,16 @@
         <div class="text-container">
             <h1>Bienvenue sur EduLib</h1>
             <p>Élevez votre potentiel avec notre expertise : des cours de qualité pour un avenir réussi.</p>
-            <button class="button">Prendre rendez vous !</button>
+            @auth
+                <a href="{{ route('reservation') }}">
+                    <button class="button">Prendre rendez-vous !</button>
+                </a>
+            @else
+                <a href="{{ route('register') }}">
+                    <button class="button">Prendre rendez-vous !</button>
+                </a>
+            @endauth
+
         </div>
         <img src="{{ asset('images/woman_teacher.png') }}" alt="Woman Image">
     </section>
@@ -89,11 +98,15 @@
             <h2>Et pourquoi pas vous ?</h2>
             <p>Commencez dès maintenant et découvrez tous les avantages de EduLib.</p>
             @guest
-                <button class="cta-button">Inscrivez-vous</button>
+                <a href="{{ route('register') }}">
+                    <button class="cta-button">Inscrivez-vous</button>
+                </a>
             @endguest
 
             @auth
-                <button class="cta-button">Prendre rendez-vous</button>
+                <a href="{{ route('reservation') }}">
+                    <button class="cta-button">Prendre rendez-vous</button>
+                </a>
             @endauth
         </div>
 
