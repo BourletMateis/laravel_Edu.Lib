@@ -99,9 +99,9 @@
         let dayButton = document.createElement('button');
         let translatedDay = daysTranslations[day] || day;
 
-        dayButton.innerHTML = `<strong>Jour :</strong> ${translatedDay} <br><hr>`;
-        dayButton.classList.add('day-button');
-        scheduleContainer.appendChild(dayButton);
+                    dayButton.innerHTML = `<strong>Jour :</strong> ${translatedDay} <br><hr>`;
+                    dayButton.classList.add('day-button');
+                    scheduleContainer.appendChild(dayButton);
 
                         let hourContainer = document.createElement('div');
                         hourContainer.classList.add('hour-container');
