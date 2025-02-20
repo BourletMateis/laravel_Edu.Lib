@@ -53,12 +53,10 @@
   </div>
 
   <script>
-    // Initialisation de Flatpickr sur le champ de date dans le popup
     document.addEventListener("DOMContentLoaded", function(){
       flatpickr("#date-picker", {
         enable: [
           function(date) {
-            // Seuls les mardis (getDay() retourne 2 pour mardi)
             return date.getDay() === 2;
           }
         ],
@@ -73,11 +71,10 @@
         .then(response => response.json())
         .then(data => {
           let scheduleContainer = document.getElementById('scheduleList');
-          scheduleContainer.innerHTML = ''; // Vide le contenu précédent
+          scheduleContainer.innerHTML = ''; 
 
           let selectedProf = document.getElementById('prof-selector').value.split('|')[0]; // Récupère l'ID du professeur
 
-          // Filtrage des disponibilités pour le professeur sélectionné
           data.forEach(schedule => {
             if (schedule.user_teacher_id == selectedProf) {
               let div = document.createElement('button');
@@ -122,8 +119,9 @@
         alert("Veuillez sélectionner un mardi.");
         return;
       }
-      createAppointments(chosenDate);
+      
       alert(`Réservation confirmée pour ${selectedDay} à ${selectedHour} le ${chosenDate}`);
+      createAppointments(chosenDate, selectedHour);
 
       closePopup();
     }
@@ -132,25 +130,26 @@
       document.getElementById('confirmation-popup').style.display = 'none';
     }
 
-  function createAppointments(chosenDate) {
+  function createAppointments(chosenDate,hour) {
     const selectedTeacherId = document.getElementById('prof-selector').value.split('|')[0];
+    let user = @json(Auth::id());
     
     $.ajax({
     url: '/createappointment', 
     method: 'POST', 
     data: {
         _token: $('meta[name="csrf-token"]').attr('content'),
-        date: "2027-10-12", 
-        start_time: "10:00:00", 
-        end_time: "20:00:00", 
-        user_teacher_id: 3, 
-        user_student_id: 1, 
+        date: chosenDate, 
+        start_time: hour + ":00",
+        end_time: (parseInt(hour) + 1) + ":00:00",
+        user_teacher_id: selectedTeacherId, 
+        user_student_id: user, 
         title: "Réservation de rendez-vous", 
         description: "Rendez-vous avec le professeur",
-        price: 60.11 
+        price: 11.88
     },
     success: function(response) {
-        alert(response.message); 
+        alert("Réservation effectuée avec succès."); 
         closePopup(); 
         fetchSchedules(); 
     },
