@@ -87,11 +87,26 @@
       });
 
       // 3. Affichage des jours et horaires
+        const daysTranslations = {
+            monday: 'Lundi',
+            tuesday: 'Mardi',
+            wednesday: 'Mercredi',
+            thursday: 'Jeudi',
+            friday: 'Vendredi',
+            saturday: 'Samedi',
+            sunday: 'Dimanche'
+        };
+
       Object.entries(groupedSchedules).forEach(([day, hours]) => {
         let dayButton = document.createElement('button');
-        dayButton.innerHTML = `<strong>Jour :</strong> ${day} <br><hr>`;
+
+          // Vérifier si la traduction existe, sinon garder le jour en anglais
+          let translatedDay = daysTranslations[day] || day;
+
+        dayButton.innerHTML = `<strong>Jour :</strong> ${translatedDay} <br><hr>`;
         dayButton.classList.add('day-button');
         scheduleContainer.appendChild(dayButton);
+
 
         // Créer un conteneur pour les horaires (caché au début)
         let hourContainer = document.createElement('div');
