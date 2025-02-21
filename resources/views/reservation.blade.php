@@ -185,7 +185,7 @@
                     _token: $('meta[name="csrf-token"]').attr('content'),
                     date: chosenDate,
                     start_time: hour + ":00",
-                    end_time: "0"+(parseInt(hour) + 1) + ":00:00",
+                    end_time: ((parseInt(hour) + 1) % 24).toString().padStart(2, '0') + ":00:00",
                     user_teacher_id: selectedTeacherId,
                     user_student_id: user,
                     title: "Réservation de rendez-vous",

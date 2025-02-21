@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     calendar.render();
-
+    // Delete event 
     document.getElementById('deleteAppointments').addEventListener('click', function() {
         if (confirm('Êtes-vous sûr de vouloir annuler ce rendez-vous ?')) {
             var eventId = this.getAttribute('data-event-id');
