@@ -11,20 +11,6 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
 
-        <!--
-        <form action="{{ url('schedules') }}" method="GET" class="mb-4">
-            <div class="form-group">
-                <label for="start_time">Heure de début</label>
-                <input type="time" name="start_time" id="start_time" class="form-control" value="{{ old('start_time', '07:00') }}">
-            </div>
-            <div class="form-group">
-                <label for="end_time">Heure de fin</label>
-                <input type="time" name="end_time" id="end_time" class="form-control" value="{{ old('end_time', '22:00') }}">
-            </div>
-            <button type="submit" class="btn btn-primary">Mettre à jour les créneaux</button>
-        </form>
-        -->
-
         <!-- Form to add a schedule -->
         <h3>Ajouter un horaire</h3>
         <form action="{{ url('schedules') }}" method="POST">

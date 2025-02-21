@@ -18,13 +18,12 @@ class AppointmentsController extends Controller
        $appointments = Appointments::where('user_teacher_id', auth()->id())->get();
 
        $events = $appointments->map(function ($appointment) {
-           // Formatage des dates
+           // Formatting dates
            $start = Carbon::parse($appointment->date . ' ' . $appointment->start_time)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
            $end = Carbon::parse($appointment->date . ' ' . $appointment->end_time)->locale('fr')->isoFormat('YYYY-MM-DDTHH:mm');
-
+           //get the name and surname of the student 
            $user = User::find($appointment->user_student_id);
            $name_surname = $user->name . ' ' . $user->surname;
-
            return [
                'id' => $appointment->id,
                'start' => $start,
@@ -39,7 +38,7 @@ class AppointmentsController extends Controller
                'price' => $appointment->price,
            ];
        });
-
+       // Return the events in JSON format
        return response()->json($events);
    }
 

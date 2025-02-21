@@ -25,14 +25,15 @@
       <div class="container">
         <h1>Calendrier des rendez-vous</h1>
       </div>
-    </header>
+</header>
+
 
 <div class="calendar_container">
     <div id="calendar"></div>
 </div>
 
 
-<!-- Modal pour ajouter une horaire -->
+<!-- Modal to add a schedule -->
 <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -87,7 +88,7 @@
     </div>
 </div>
 
-<!-- Modal pour afficher les détails de l'événement -->
+<!-- Modal to display event details -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -109,7 +110,7 @@
 </div>
 
 
-
+<!-- Insert toolbar -->
 <?php
 require_once base_path('app/View/toolbarAdmin.php');
     echo $toolbar->render();

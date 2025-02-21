@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
             right: 'dayGridMonth,dayGridWeek,dayGridDay,timeslot'
         },
         buttonText: {
-            timeslot: "+",
             today: "Aujourd'hui",
             month: 'Mois',
             week: 'Semaine',

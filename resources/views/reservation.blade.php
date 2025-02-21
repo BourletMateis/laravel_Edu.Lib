@@ -42,7 +42,6 @@
           </div>
         </div>
       </div>
-
       <script>
         let flatpickrInstance;
         function initializeDatePicker(day) {
@@ -95,7 +94,6 @@
       Object.entries(groupedSchedules).forEach(([day, hours]) => {
         let dayButton = document.createElement('button');
         let translatedDay = daysTranslations[day] || day;
-
                     dayButton.innerHTML = `<strong>Jour :</strong> ${translatedDay} <br><hr>`;
                     dayButton.classList.add('day-button');
                     scheduleContainer.appendChild(dayButton);
@@ -104,7 +102,6 @@
                         hourContainer.classList.add('hour-container');
                         hourContainer.style.display = 'none';
                         scheduleContainer.appendChild(hourContainer);
-
                         hours.forEach(hour => {
                             let hourButton = document.createElement('button');
                             hourButton.classList.add('hour-button');
@@ -181,7 +178,6 @@
         function createAppointments(chosenDate, hour) {
             const selectedTeacherId = document.getElementById('prof-selector').value.split('|')[0];
             let user = @json(Auth::id());
-
             $.ajax({
                 url: '/createappointment',
                 method: 'POST',
