@@ -5,10 +5,15 @@ Bienvenue dans notre projet de système de réservation pour professeurs ! 🎓�
 ## ✨ Fonctionnalités Principales
 
 ✅ **Page d'accueil** : Affichage des informations sur les professeurs et leurs disponibilités.
+
 ✅ **Système de réservation** : Les étudiants peuvent réserver un rendez-vous avec un professeur via un formulaire.
+
 ✅ **Gestion des rendez-vous** : Consultation, modification et annulation des rendez-vous.
+
 ✅ **Authentification** : Gestion des comptes utilisateurs pour les professeurs et les étudiants.
+
 ✅ **Gestion des disponibilités** : Les professeurs peuvent définir leurs créneaux horaires.
+
 ✅ **Envoi d’e-mails** : Confirmation et rappels automatiques par e-mail. 
 
 ---
