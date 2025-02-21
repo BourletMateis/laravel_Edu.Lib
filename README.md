@@ -1,6 +1,7 @@
 # 📚 Système de Réservation pour Professeurs
 
-Bienvenue dans notre projet de système de réservation pour professeurs ! 🎓📅 Ce projet vise à simplifier la gestion des rendez-vous entre professeurs et étudiants en offrant une plateforme intuitive et efficace. 
+Bienvenue dans notre projet de système de réservation pour professeurs ! 🎓
+📅 Ce projet vise à simplifier la gestion des rendez-vous entre professeurs et étudiants en offrant une plateforme intuitive et efficace. 
 
 ## ✨ Fonctionnalités Principales
 
